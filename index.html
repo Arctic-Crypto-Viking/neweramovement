@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>New Era Movement</title>
+<meta name="description" content="Preparing for The New Era.">
+<meta name="theme-color" content="#000516">
+<meta property="og:title" content="New Era Movement">
+<meta property="og:description" content="Preparing for The New Era.">
+<meta property="og:image" content="https://neweramovement.org/emblem.webp">
+<link rel="icon" href="favicon.png" type="image/png">
+<link rel="preload" href="fonts/montserrat-latin-300-normal.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+  @font-face { font-family:"Montserrat"; font-style:normal; font-weight:300; font-display:swap; src:url("fonts/montserrat-latin-300-normal.woff2") format("woff2"); }
+  @font-face { font-family:"Montserrat"; font-style:normal; font-weight:400; font-display:swap; src:url("fonts/montserrat-latin-400-normal.woff2") format("woff2"); }
+  @font-face { font-family:"Montserrat"; font-style:normal; font-weight:500; font-display:swap; src:url("fonts/montserrat-latin-500-normal.woff2") format("woff2"); }
+  @font-face { font-family:"Montserrat"; font-style:normal; font-weight:600; font-display:swap; src:url("fonts/montserrat-latin-600-normal.woff2") format("woff2"); }
+  @font-face { font-family:"Cormorant Garamond"; font-style:italic; font-weight:300; font-display:swap; src:url("fonts/cormorant-garamond-latin-300-italic.woff2") format("woff2"); }
+  :root { --bg:#000516; --ink:#eef2f8; --muted:#8a8f9c; --gold:#e8c98a; }
+  * { box-sizing:border-box; margin:0; padding:0; }
+  html,body { height:100%; }
+  body {
+    background:var(--bg); color:var(--ink);
+    font-family:"Montserrat",system-ui,sans-serif;
+    display:flex; align-items:center; justify-content:center;
+    overflow:hidden; min-height:100svh;
+  }
+
+  /* light rays falling onto the emblem from above */
+  .rays {
+    position:fixed; left:50%; top:-25vh; width:150vmax; height:115vh; z-index:0;
+    transform:translateX(-50%); pointer-events:none;
+    background:conic-gradient(from 180deg at 50% 0%,
+      transparent 160deg,
+      rgba(90,220,210,.05) 167deg, rgba(150,240,230,.20) 172deg,
+      rgba(90,220,210,.04) 176deg, rgba(232,201,138,.16) 180deg,
+      rgba(90,220,210,.05) 185deg, rgba(150,240,230,.17) 190deg,
+      transparent 200deg);
+    -webkit-mask-image:linear-gradient(to bottom,#000 15%,transparent 72%);
+            mask-image:linear-gradient(to bottom,#000 15%,transparent 72%);
+    filter:blur(7px);
+    animation:rays 9s ease-in-out infinite alternate;
+  }
+  @keyframes rays {
+    0%   { opacity:.6; transform:translateX(-50%) rotate(-1.5deg); }
+    100% { opacity:1;  transform:translateX(-50%) rotate(1.5deg); }
+  }
+  /* faint dust drifting through the light */
+  .dust {
+    position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.5;
+    background-image:
+      radial-gradient(1px 1px at 20% 30%, #9ff 50%, transparent 51%),
+      radial-gradient(1px 1px at 65% 22%, #fff 50%, transparent 51%),
+      radial-gradient(1.5px 1.5px at 42% 70%, #bfe 50%, transparent 51%),
+      radial-gradient(1px 1px at 80% 60%, #fff 50%, transparent 51%),
+      radial-gradient(1px 1px at 33% 85%, #9ee 50%, transparent 51%),
+      radial-gradient(1px 1px at 55% 45%, #fff 50%, transparent 51%);
+    background-size:600px 600px;
+    animation:dust 60s linear infinite;
+  }
+  @keyframes dust { to { background-position:0 -600px; } }
+
+  main { position:relative; z-index:1; text-align:center; padding:2rem 1.5rem; }
+
+  /* 3D stage for the emblem */
+  .stage { perspective:1100px; width:min(34vw,170px); margin:0 auto; }
+  @media (max-height:760px) { .stage { width:min(30vw,130px); } }
+  .tilt  { transform-style:preserve-3d; transition:transform .7s cubic-bezier(.2,.7,.2,1); }
+  .mark {
+    position:relative; transform-style:preserve-3d; opacity:0;
+    animation:
+      enter 2.4s cubic-bezier(.2,.7,.2,1) .2s forwards,
+      sway 14s ease-in-out 2.6s infinite;
+  }
+  @keyframes enter {
+    from { opacity:0; transform:translateY(20px) rotateX(20deg) scale(.93); filter:blur(8px); }
+    to   { opacity:1; transform:none; filter:blur(0); }
+  }
+  @keyframes sway {
+    0%,100% { transform:rotateY(-17deg) rotateX(5deg)  translateY(0); }
+    50%     { transform:rotateY(17deg)  rotateX(-3deg) translateY(-9px); }
+  }
+  .emblem {
+    width:100%; height:auto; display:block;
+    animation:glow 7s ease-in-out 2.6s infinite;
+  }
+  @keyframes glow {
+    0%,100% { filter:drop-shadow(0 22px 30px rgba(0,0,0,.7)) drop-shadow(0 0 14px rgba(232,201,138,.18)); }
+    50%     { filter:drop-shadow(0 22px 30px rgba(0,0,0,.7)) drop-shadow(0 0 26px rgba(110,230,220,.22)) drop-shadow(0 0 50px rgba(232,201,138,.12)); }
+  }
+  /* glass-like highlight sweeping across the emblem, clipped to its oval */
+  .shine, .edge {
+    position:absolute; inset:0; pointer-events:none;
+    clip-path:ellipse(45.8% 47.1% at 50% 50.1%);
+  }
+  .shine {
+    background:linear-gradient(112deg,
+      transparent 40%, rgba(255,255,255,.12) 45%,
+      rgba(255,250,235,.75) 50%, rgba(255,255,255,.12) 55%, transparent 60%);
+    background-size:300% 100%;
+    mix-blend-mode:screen;
+    animation:sweep 7s cubic-bezier(.45,0,.2,1) 2.4s infinite;
+  }
+  @keyframes sweep { 0% { background-position:120% 0; } 45%,100% { background-position:-20% 0; } }
+  .edge {
+    background:linear-gradient(200deg,rgba(255,255,255,.28),transparent 45%);
+    mix-blend-mode:screen;
+    animation:edge 14s ease-in-out 2.6s infinite;
+  }
+  @keyframes edge { 0%,100% { opacity:.15; } 50% { opacity:.55; } }
+
+  /* wordmark: live type, gold with a slow glint */
+  .word { margin:1.7rem auto 0; opacity:0; animation:rise 1.8s ease 1.4s forwards;
+          font-family:"Montserrat",system-ui,sans-serif; user-select:none; }
+  .ne {
+    font-weight:300; font-size:clamp(2.1rem,6.2vw,3.3rem); line-height:1; letter-spacing:.16em;
+    padding-left:.16em; white-space:nowrap;
+  }
+  .ne .g {
+    background-image:
+      linear-gradient(105deg, transparent 42%, rgba(255,250,235,.95) 50%, transparent 58%),
+      linear-gradient(180deg, #f7e2b4 0%, #e3b974 48%, #c99550 100%);
+    background-size:300% 100%, 100% 100%; background-repeat:no-repeat;
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    animation:glint 9s cubic-bezier(.45,0,.2,1) 4s infinite;
+  }
+  .ne .lam { display:inline-block; transform:rotate(180deg); letter-spacing:0; margin-right:-.16em; animation:none;
+    background-image:linear-gradient(0deg, #f7e2b4 0%, #e3b974 48%, #c99550 100%); background-size:100% 100%; }
+  @keyframes glint { 0% { background-position:120% 0, 0 0; } 45%,100% { background-position:-20% 0, 0 0; } }
+  .mv { display:flex; align-items:center; justify-content:center; gap:1.1em; margin-top:.55em;
+        font-weight:400; font-size:clamp(.66rem,1.75vw,.95rem); letter-spacing:.62em; color:#d2f1ee; }
+  .mv span { padding-left:.62em; }
+  .mv i { display:block; width:2.6em; height:1px; background:linear-gradient(90deg,transparent,#d9b273); }
+  .mv i:last-child { transform:scaleX(-1); }
+
+  /* the initiatives under the umbrella */
+  .initiatives {
+    display:flex; justify-content:center; align-items:center; gap:clamp(1.5rem,6vw,5rem);
+    margin-top:2.4rem; opacity:0; animation:rise 1.6s ease 2.0s forwards;
+  }
+  .initiative { display:block; text-decoration:none; color:inherit; transition:transform .4s ease, filter .4s ease; }
+  .initiative:hover { transform:translateY(-3px); filter:brightness(1.15); }
+  .cp, .pasai { display:flex; align-items:center; gap:.7rem; text-align:left; }
+  .cp svg { width:clamp(56px,7.6vw,76px); height:auto; flex:none; overflow:visible; }
+  .cp .name { display:block; font-family:"Montserrat",system-ui,sans-serif; font-weight:300;
+    font-size:clamp(1.15rem,2.6vw,1.55rem); letter-spacing:.01em; line-height:1.1; color:#f4f8fc; white-space:nowrap; }
+  .cp .name b { font-weight:600; }
+  .cp .tag { display:block; margin-top:.3rem; font-family:"Montserrat",system-ui,sans-serif;
+    font-size:clamp(.42rem,1vw,.55rem); letter-spacing:.2em; color:#cfd6e2; white-space:nowrap; }
+  .pasai svg { width:clamp(52px,7vw,70px); height:auto; flex:none; overflow:visible; }
+  .pasai .name {
+    display:block; font-family:"Montserrat",system-ui,sans-serif; font-weight:500;
+    font-size:clamp(1.15rem,2.6vw,1.55rem); letter-spacing:.04em; line-height:1.1;
+    background:linear-gradient(90deg,#f1dfb4,#e8c98a 40%,#8fe6da);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .pasai .tag { display:block; margin-top:.3rem; font-family:"Montserrat",system-ui,sans-serif;
+    font-size:clamp(.42rem,1vw,.55rem); letter-spacing:.2em; color:#cfd6e2; white-space:nowrap; }
+  .pm-ring  { animation:pmring 6s ease-in-out infinite; transform-origin:50px 50px; }
+  @keyframes pmring { 0%,100% { opacity:.85; } 50% { opacity:1; } }
+  .pm-node  { animation:pmnode 3.2s ease-in-out infinite; }
+  .pm-node:nth-of-type(2) { animation-delay:.5s; } .pm-node:nth-of-type(3) { animation-delay:1s; }
+  .pm-node:nth-of-type(4) { animation-delay:1.5s; }
+  @keyframes pmnode { 0%,100% { opacity:.45; } 40% { opacity:1; } }
+  .pm-star { transform-origin:50px 17px; animation:pmstar 3.2s ease-in-out 2s infinite; }
+  @keyframes pmstar { 0%,100% { transform:scale(.8); opacity:.75; } 15% { transform:scale(1.25); opacity:1; } }
+  @media (max-width:560px) {
+    .initiatives { flex-direction:column; gap:1.4rem; }
+    .pasai { width:auto; }
+  }
+
+  blockquote { margin-top:2.4rem; opacity:0; animation:rise 1.6s ease 2.4s forwards; }
+  blockquote p {
+    font-family:"Cormorant Garamond",Georgia,serif; font-style:italic; font-weight:300;
+    font-size:clamp(1.4rem,4vw,2.2rem); line-height:1.25;
+  }
+  blockquote footer {
+    margin-top:.9rem; font-size:.72rem; letter-spacing:.32em; text-transform:uppercase; color:var(--muted);
+  }
+  @keyframes rise { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:none; } }
+
+  @media (prefers-reduced-motion:reduce) {
+    .rays,.dust,.mark,.emblem,.shine,.edge,.word,.ne,.initiatives,.pm-ring,.pm-node,.pm-star,blockquote { animation:none !important; opacity:1; transform:none; }
+  }
+</style>
+</head>
+<body>
+  <div class="rays" aria-hidden="true"></div>
+  <div class="dust" aria-hidden="true"></div>
+  <main>
+    <h1 style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">New Era Movement</h1>
+    <div class="stage">
+      <div class="tilt" id="tilt">
+        <div class="mark">
+          <svg class="emblem" id="emblem" viewBox="0 0 600 904" role="img" aria-label="New Era Movement emblem">
+            <defs>
+              <clipPath id="nOval"><ellipse cx="300" cy="453" rx="273" ry="424"/></clipPath>
+              <radialGradient id="nSky" cx="300" cy="330" r="430" gradientUnits="userSpaceOnUse">
+                <stop offset="0" stop-color="#0f8790"/><stop offset=".45" stop-color="#0a5f70"/><stop offset="1" stop-color="#012a42"/>
+              </radialGradient>
+              <radialGradient id="nTop" cx="300" cy="20" r="260" gradientTransform="translate(300 20) scale(.55 1) translate(-300 -20)" gradientUnits="userSpaceOnUse">
+                <stop offset="0" stop-color="#25dcd4" stop-opacity=".95"/><stop offset=".5" stop-color="#16a9a8" stop-opacity=".45"/><stop offset="1" stop-color="#16a9a8" stop-opacity="0"/>
+              </radialGradient>
+              <radialGradient id="nVig" cx="300" cy="360" r="300" gradientTransform="translate(300 360) scale(1 1.25) translate(-300 -360)" gradientUnits="userSpaceOnUse">
+                <stop offset=".42" stop-color="#012238" stop-opacity="0"/><stop offset="1" stop-color="#011d33" stop-opacity="1"/>
+              </radialGradient>
+              <radialGradient id="nDawn" cx="300" cy="540" r="320" gradientTransform="translate(300 540) scale(1 .55) translate(-300 -540)" gradientUnits="userSpaceOnUse">
+                <stop offset="0" stop-color="#fff4d2" stop-opacity=".95"/><stop offset=".1" stop-color="#f1d995" stop-opacity=".6"/>
+                <stop offset=".4" stop-color="#2fb7a8" stop-opacity=".5"/><stop offset="1" stop-color="#1fa69c" stop-opacity="0"/>
+              </radialGradient>
+              <linearGradient id="nRay" x1="0" y1="1" x2="0" y2="0">
+                <stop offset="0" stop-color="#fff1c8" stop-opacity=".55"/><stop offset=".6" stop-color="#bff2e4" stop-opacity=".08"/><stop offset="1" stop-color="#bff2e4" stop-opacity="0"/>
+              </linearGradient>
+              <linearGradient id="nBeam" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0" stop-color="#7ff7ee" stop-opacity="0"/><stop offset=".5" stop-color="#c4fff7" stop-opacity=".42"/><stop offset="1" stop-color="#7ff7ee" stop-opacity="0"/>
+              </linearGradient>
+              <linearGradient id="nBeamFade" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset=".7" stop-color="#fff" stop-opacity=".45"/><stop offset="1" stop-color="#fff" stop-opacity=".1"/>
+              </linearGradient>
+              <mask id="nBeamMask"><rect x="0" y="0" width="600" height="560" fill="url(#nBeamFade)"/></mask>
+              <linearGradient id="nPulse" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#fff" stop-opacity="0"/><stop offset=".5" stop-color="#f2fffb" stop-opacity=".85"/><stop offset="1" stop-color="#fff" stop-opacity="0"/>
+              </linearGradient>
+              <linearGradient id="nGate" x1="0" y1="1" x2="0" y2="0">
+                <stop offset="0" stop-color="#fff6d8" stop-opacity=".95"/><stop offset=".35" stop-color="#c9f5e6" stop-opacity=".35"/><stop offset="1" stop-color="#9ff0e3" stop-opacity=".12"/>
+              </linearGradient>
+              <linearGradient id="nSea" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#1b367c"/><stop offset=".07" stop-color="#112862"/><stop offset=".35" stop-color="#0a1b4c"/><stop offset=".7" stop-color="#040e33"/><stop offset="1" stop-color="#010622"/>
+              </linearGradient>
+              <radialGradient id="nGlint" cx="300" cy="545" r="150" gradientTransform="translate(0 545) scale(1 .35) translate(0 -545)" gradientUnits="userSpaceOnUse">
+                <stop offset="0" stop-color="#ffe9b5" stop-opacity=".75"/><stop offset="1" stop-color="#ffe9b5" stop-opacity="0"/>
+              </radialGradient>
+              <linearGradient id="nWave" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0" stop-color="#3554a8"/><stop offset=".5" stop-color="#6f8ee6"/><stop offset="1" stop-color="#3554a8"/>
+              </linearGradient>
+              <linearGradient id="nRing" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#f8dfa6"/><stop offset=".35" stop-color="#d99a4e"/><stop offset=".6" stop-color="#f6cf86"/><stop offset="1" stop-color="#b9813f"/>
+              </linearGradient>
+              <filter id="nGlow" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+              <filter id="nSoft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="6"/></filter>
+              <linearGradient id="nHz" x1="0" y1="0" x2="600" y2="0" gradientUnits="userSpaceOnUse">
+                <stop offset="0" stop-color="#f3b45c"/><stop offset=".3" stop-color="#ffdc94"/><stop offset=".5" stop-color="#ffffff"/><stop offset=".7" stop-color="#ffdc94"/><stop offset="1" stop-color="#f3b45c"/>
+              </linearGradient>
+              <filter id="nPulseBlur" x="-200%" y="-100%" width="500%" height="300%"><feGaussianBlur stdDeviation="9"/></filter>
+              <filter id="nBig" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="14"/></filter>
+            </defs>
+
+            <g clip-path="url(#nOval)">
+              <!-- sky -->
+              <rect width="600" height="560" fill="url(#nSky)"/>
+              <rect width="600" height="560" fill="url(#nTop)"/>
+              <rect width="600" height="560" fill="url(#nVig)"/>
+              <rect width="600" height="560" fill="url(#nDawn)"><animate attributeName="opacity" values=".8;1;.8" dur="7s" repeatCount="indefinite"/></rect>
+
+              <!-- rays fanning from the dawn -->
+              <g class="n-rays" opacity=".55">
+              <line x1="300" y1="534" x2="-22.8" y2="465.4" stroke="url(#nRay)" stroke-width="0.7"/>
+              <line x1="300" y1="534" x2="-13.8" y2="432.0" stroke="url(#nRay)" stroke-width="1.1"/>
+              <line x1="300" y1="534" x2="-1.5" y2="399.8" stroke="url(#nRay)" stroke-width="0.7"/>
+              <line x1="300" y1="534" x2="14.2" y2="369.0" stroke="url(#nRay)" stroke-width="1.1"/>
+              <line x1="300" y1="534" x2="33.0" y2="340.0" stroke="url(#nRay)" stroke-width="0.7"/>
+              <line x1="300" y1="534" x2="54.8" y2="313.2" stroke="url(#nRay)" stroke-width="1.1"/>
+              <line x1="300" y1="534" x2="79.2" y2="288.8" stroke="url(#nRay)" stroke-width="0.7"/>
+              <line x1="300" y1="534" x2="106.0" y2="267.0" stroke="url(#nRay)" stroke-width="1.1"/>
+              <line x1="300" y1="534" x2="135.0" y2="248.2" stroke="url(#nRay)" stroke-width="0.7"/>
+              <line x1="300" y1="534" x2="165.8" y2="232.5" stroke="url(#nRay)" stroke-width="1.1"/>
+              <line x1="300" y1="534" x2="198.0" y2="220.2" stroke="url(#nRay)" stroke-width="0.7"/>
+              <line x1="300" y1="534" x2="231.4" y2="211.2" stroke="url(#nRay)" stroke-width="1.1"/>
+              <line x1="300" y1="534" x2="265.5" y2="205.8" stroke="url(#nRay)" stroke-width="0.7"/>
+              <line x1="300" y1="534" x2="334.5" y2="205.8" stroke="url(#nRay)" stroke-width="0.7"/>
+              <line x1="300" y1="534" x2="368.6" y2="211.2" stroke="url(#nRay)" stroke-width="1.1"/>
+              <line x1="300" y1="534" x2="402.0" y2="220.2" stroke="url(#nRay)" stroke-width="0.7"/>
+              <line x1="300" y1="534" x2="434.2" y2="232.5" stroke="url(#nRay)" stroke-width="1.1"/>
+              <line x1="300" y1="534" x2="465.0" y2="248.2" stroke="url(#nRay)" stroke-width="0.7"/>
+              <line x1="300" y1="534" x2="494.0" y2="267.0" stroke="url(#nRay)" stroke-width="1.1"/>
+              <line x1="300" y1="534" x2="520.8" y2="288.8" stroke="url(#nRay)" stroke-width="0.7"/>
+              <line x1="300" y1="534" x2="545.2" y2="313.2" stroke="url(#nRay)" stroke-width="1.1"/>
+              <line x1="300" y1="534" x2="567.0" y2="340.0" stroke="url(#nRay)" stroke-width="0.7"/>
+              <line x1="300" y1="534" x2="585.8" y2="369.0" stroke="url(#nRay)" stroke-width="1.1"/>
+              <line x1="300" y1="534" x2="601.5" y2="399.8" stroke="url(#nRay)" stroke-width="0.7"/>
+              <line x1="300" y1="534" x2="613.8" y2="432.0" stroke="url(#nRay)" stroke-width="1.1"/>
+              <line x1="300" y1="534" x2="622.8" y2="465.4" stroke="url(#nRay)" stroke-width="0.7"/>
+                <animate attributeName="opacity" values=".35;.7;.35" dur="9s" repeatCount="indefinite"/>
+              </g>
+
+              <!-- the beam, with light travelling up it -->
+              <g mask="url(#nBeamMask)">
+                <rect x="262" y="0" width="76" height="534" fill="url(#nBeam)"><animate attributeName="opacity" values=".7;1;.7" dur="5s" repeatCount="indefinite"/></rect>
+                <ellipse cx="300" cy="520" rx="16" ry="60" fill="#eafffb" filter="url(#nPulseBlur)" opacity=".55">
+                  <animate attributeName="cy" values="560;-80" dur="4.2s" repeatCount="indefinite" calcMode="spline" keySplines=".4 0 .6 1"/>
+                </ellipse>
+                <ellipse cx="300" cy="520" rx="12" ry="44" fill="#eafffb" filter="url(#nPulseBlur)" opacity=".35">
+                  <animate attributeName="cy" values="560;-80" dur="4.2s" begin="2.1s" repeatCount="indefinite" calcMode="spline" keySplines=".4 0 .6 1"/>
+                </ellipse>
+              </g>
+
+              <!-- rising light motes (generated) -->
+              <g id="nMotes" filter="url(#nGlow)"></g>
+
+              <!-- sea -->
+              <path d="M0 576 Q300 492 600 576 L600 904 L0 904 Z" fill="url(#nSea)"/>
+              <g clip-path="url(#nSeaClip)">
+                <clipPath id="nSeaClip"><path d="M0 576 Q300 492 600 576 L600 904 L0 904 Z"/></clipPath>
+                <path d="M-600,567.2 L-592,567.5 L-584,567.8 L-576,568.1 L-568,568.4 L-560,568.6 L-552,568.9 L-544,569.1 L-536,569.3 L-528,569.5 L-520,569.6 L-512,569.8 L-504,569.9 L-496,569.9 L-488,570.0 L-480,570.0 L-472,570.0 L-464,570.0 L-456,569.9 L-448,569.8 L-440,569.7 L-432,569.5 L-424,569.4 L-416,569.2 L-408,569.0 L-400,568.7 L-392,568.5 L-384,568.2 L-376,567.9 L-368,567.6 L-360,567.3 L-352,567.0 L-344,566.6 L-336,566.3 L-328,566.0 L-320,565.6 L-312,565.3 L-304,565.0 L-296,564.7 L-288,564.3 L-280,564.0 L-272,563.8 L-264,563.5 L-256,563.2 L-248,563.0 L-240,562.8 L-232,562.6 L-224,562.4 L-216,562.3 L-208,562.2 L-200,562.1 L-192,562.0 L-184,562.0 L-176,562.0 L-168,562.0 L-160,562.1 L-152,562.2 L-144,562.3 L-136,562.4 L-128,562.5 L-120,562.7 L-112,562.9 L-104,563.2 L-96,563.4 L-88,563.7 L-80,564.0 L-72,564.2 L-64,564.6 L-56,564.9 L-48,565.2 L-40,565.5 L-32,565.9 L-24,566.2 L-16,566.5 L-8,566.9 L0,567.2 L8,567.5 L16,567.8 L24,568.1 L32,568.4 L40,568.6 L48,568.9 L56,569.1 L64,569.3 L72,569.5 L80,569.6 L88,569.8 L96,569.9 L104,569.9 L112,570.0 L120,570.0 L128,570.0 L136,570.0 L144,569.9 L152,569.8 L160,569.7 L168,569.5 L176,569.4 L184,569.2 L192,569.0 L200,568.7 L208,568.5 L216,568.2 L224,567.9 L232,567.6 L240,567.3 L248,567.0 L256,566.6 L264,566.3 L272,566.0 L280,565.6 L288,565.3 L296,565.0 L304,564.7 L312,564.3 L320,564.0 L328,563.8 L336,563.5 L344,563.2 L352,563.0 L360,562.8 L368,562.6 L376,562.4 L384,562.3 L392,562.2 L400,562.1 L408,562.0 L416,562.0 L424,562.0 L432,562.0 L440,562.1 L448,562.2 L456,562.3 L464,562.4 L472,562.5 L480,562.7 L488,562.9 L496,563.2 L504,563.4 L512,563.7 L520,564.0 L528,564.2 L536,564.6 L544,564.9 L552,565.2 L560,565.5 L568,565.9 L576,566.2 L584,566.5 L592,566.9 L600,567.2 L608,567.5 L616,567.8 L624,568.1 L632,568.4 L640,568.6 L648,568.9 L656,569.1 L664,569.3 L672,569.5 L680,569.6 L688,569.8 L696,569.9 L704,569.9 L712,570.0 L720,570.0 L728,570.0 L736,570.0 L744,569.9 L752,569.8 L760,569.7 L768,569.5 L776,569.4 L784,569.2 L792,569.0 L800,568.7 L808,568.5 L816,568.2 L824,567.9 L832,567.6 L840,567.3 L848,567.0 L856,566.6 L864,566.3 L872,566.0 L880,565.6 L888,565.3 L896,565.0 L904,564.7 L912,564.3 L920,564.0 L928,563.8 L936,563.5 L944,563.2 L952,563.0 L960,562.8 L968,562.6 L976,562.4 L984,562.3 L992,562.2 L1000,562.1 L1008,562.0 L1016,562.0 L1024,562.0 L1032,562.0 L1040,562.1 L1048,562.2 L1056,562.3 L1064,562.4 L1072,562.5 L1080,562.7 L1088,562.9 L1096,563.2 L1104,563.4 L1112,563.7 L1120,564.0 L1128,564.2 L1136,564.6 L1144,564.9 L1152,565.2 L1160,565.5 L1168,565.9 L1176,566.2 L1184,566.5 L1192,566.9 L1200,567.2" stroke="url(#nWave)" stroke-width="1.05" fill="none" opacity="0.62"><animateTransform attributeName="transform" type="translate" from="0 0" to="-600 0" dur="40s" repeatCount="indefinite"/></path>
+                <path d="M-600,593.9 L-592,594.2 L-584,594.4 L-576,594.6 L-568,594.8 L-560,594.9 L-552,595.0 L-544,595.0 L-536,595.0 L-528,594.9 L-520,594.8 L-512,594.6 L-504,594.3 L-496,594.1 L-488,593.8 L-480,593.4 L-472,593.0 L-464,592.6 L-456,592.1 L-448,591.7 L-440,591.1 L-432,590.6 L-424,590.1 L-416,589.5 L-408,588.9 L-400,588.3 L-392,587.7 L-384,587.2 L-376,586.6 L-368,586.0 L-360,585.5 L-352,584.9 L-344,584.4 L-336,583.9 L-328,583.5 L-320,583.0 L-312,582.6 L-304,582.3 L-296,582.0 L-288,581.7 L-280,581.5 L-272,581.3 L-264,581.1 L-256,581.0 L-248,581.0 L-240,581.0 L-232,581.1 L-224,581.2 L-216,581.3 L-208,581.5 L-200,581.8 L-192,582.1 L-184,582.4 L-176,582.8 L-168,583.2 L-160,583.6 L-152,584.1 L-144,584.6 L-136,585.1 L-128,585.7 L-120,586.2 L-112,586.8 L-104,587.4 L-96,588.0 L-88,588.5 L-80,589.1 L-72,589.7 L-64,590.3 L-56,590.8 L-48,591.3 L-40,591.8 L-32,592.3 L-24,592.8 L-16,593.2 L-8,593.6 L0,593.9 L8,594.2 L16,594.4 L24,594.6 L32,594.8 L40,594.9 L48,595.0 L56,595.0 L64,595.0 L72,594.9 L80,594.8 L88,594.6 L96,594.3 L104,594.1 L112,593.8 L120,593.4 L128,593.0 L136,592.6 L144,592.1 L152,591.7 L160,591.1 L168,590.6 L176,590.1 L184,589.5 L192,588.9 L200,588.3 L208,587.7 L216,587.2 L224,586.6 L232,586.0 L240,585.5 L248,584.9 L256,584.4 L264,583.9 L272,583.5 L280,583.0 L288,582.6 L296,582.3 L304,582.0 L312,581.7 L320,581.5 L328,581.3 L336,581.1 L344,581.0 L352,581.0 L360,581.0 L368,581.1 L376,581.2 L384,581.3 L392,581.5 L400,581.8 L408,582.1 L416,582.4 L424,582.8 L432,583.2 L440,583.6 L448,584.1 L456,584.6 L464,585.1 L472,585.7 L480,586.2 L488,586.8 L496,587.4 L504,588.0 L512,588.5 L520,589.1 L528,589.7 L536,590.3 L544,590.8 L552,591.3 L560,591.8 L568,592.3 L576,592.8 L584,593.2 L592,593.6 L600,593.9 L608,594.2 L616,594.4 L624,594.6 L632,594.8 L640,594.9 L648,595.0 L656,595.0 L664,595.0 L672,594.9 L680,594.8 L688,594.6 L696,594.3 L704,594.1 L712,593.8 L720,593.4 L728,593.0 L736,592.6 L744,592.1 L752,591.7 L760,591.1 L768,590.6 L776,590.1 L784,589.5 L792,588.9 L800,588.3 L808,587.7 L816,587.2 L824,586.6 L832,586.0 L840,585.5 L848,584.9 L856,584.4 L864,583.9 L872,583.5 L880,583.0 L888,582.6 L896,582.3 L904,582.0 L912,581.7 L920,581.5 L928,581.3 L936,581.1 L944,581.0 L952,581.0 L960,581.0 L968,581.1 L976,581.2 L984,581.3 L992,581.5 L1000,581.8 L1008,582.1 L1016,582.4 L1024,582.8 L1032,583.2 L1040,583.6 L1048,584.1 L1056,584.6 L1064,585.1 L1072,585.7 L1080,586.2 L1088,586.8 L1096,587.4 L1104,588.0 L1112,588.5 L1120,589.1 L1128,589.7 L1136,590.3 L1144,590.8 L1152,591.3 L1160,591.8 L1168,592.3 L1176,592.8 L1184,593.2 L1192,593.6 L1200,593.9" stroke="url(#nWave)" stroke-width="1.05" fill="none" opacity="0.57"><animateTransform attributeName="transform" type="translate" from="0 0" to="-600 0" dur="47s" repeatCount="indefinite"/></path>
+                <path d="M-600,625.7 L-592,625.5 L-584,625.2 L-576,624.9 L-568,624.4 L-560,624.0 L-552,623.4 L-544,622.9 L-536,622.2 L-528,621.5 L-520,620.8 L-512,620.1 L-504,619.3 L-496,618.5 L-488,617.7 L-480,616.8 L-472,616.0 L-464,615.2 L-456,614.3 L-448,613.5 L-440,612.7 L-432,611.9 L-424,611.2 L-416,610.5 L-408,609.8 L-400,609.2 L-392,608.6 L-384,608.0 L-376,607.6 L-368,607.1 L-360,606.8 L-352,606.5 L-344,606.3 L-336,606.1 L-328,606.0 L-320,606.0 L-312,606.1 L-304,606.2 L-296,606.4 L-288,606.6 L-280,606.9 L-272,607.3 L-264,607.8 L-256,608.3 L-248,608.8 L-240,609.5 L-232,610.1 L-224,610.8 L-216,611.5 L-208,612.3 L-200,613.1 L-192,613.9 L-184,614.7 L-176,615.6 L-168,616.4 L-160,617.2 L-152,618.1 L-144,618.9 L-136,619.7 L-128,620.4 L-120,621.2 L-112,621.9 L-104,622.5 L-96,623.1 L-88,623.7 L-80,624.2 L-72,624.7 L-64,625.0 L-56,625.4 L-48,625.6 L-40,625.8 L-32,625.9 L-24,626.0 L-16,626.0 L-8,625.9 L0,625.7 L8,625.5 L16,625.2 L24,624.9 L32,624.4 L40,624.0 L48,623.4 L56,622.9 L64,622.2 L72,621.5 L80,620.8 L88,620.1 L96,619.3 L104,618.5 L112,617.7 L120,616.8 L128,616.0 L136,615.2 L144,614.3 L152,613.5 L160,612.7 L168,611.9 L176,611.2 L184,610.5 L192,609.8 L200,609.2 L208,608.6 L216,608.0 L224,607.6 L232,607.1 L240,606.8 L248,606.5 L256,606.3 L264,606.1 L272,606.0 L280,606.0 L288,606.1 L296,606.2 L304,606.4 L312,606.6 L320,606.9 L328,607.3 L336,607.8 L344,608.3 L352,608.8 L360,609.5 L368,610.1 L376,610.8 L384,611.5 L392,612.3 L400,613.1 L408,613.9 L416,614.7 L424,615.6 L432,616.4 L440,617.2 L448,618.1 L456,618.9 L464,619.7 L472,620.4 L480,621.2 L488,621.9 L496,622.5 L504,623.1 L512,623.7 L520,624.2 L528,624.7 L536,625.0 L544,625.4 L552,625.6 L560,625.8 L568,625.9 L576,626.0 L584,626.0 L592,625.9 L600,625.7 L608,625.5 L616,625.2 L624,624.9 L632,624.4 L640,624.0 L648,623.4 L656,622.9 L664,622.2 L672,621.5 L680,620.8 L688,620.1 L696,619.3 L704,618.5 L712,617.7 L720,616.8 L728,616.0 L736,615.2 L744,614.3 L752,613.5 L760,612.7 L768,611.9 L776,611.2 L784,610.5 L792,609.8 L800,609.2 L808,608.6 L816,608.0 L824,607.6 L832,607.1 L840,606.8 L848,606.5 L856,606.3 L864,606.1 L872,606.0 L880,606.0 L888,606.1 L896,606.2 L904,606.4 L912,606.6 L920,606.9 L928,607.3 L936,607.8 L944,608.3 L952,608.8 L960,609.5 L968,610.1 L976,610.8 L984,611.5 L992,612.3 L1000,613.1 L1008,613.9 L1016,614.7 L1024,615.6 L1032,616.4 L1040,617.2 L1048,618.1 L1056,618.9 L1064,619.7 L1072,620.4 L1080,621.2 L1088,621.9 L1096,622.5 L1104,623.1 L1112,623.7 L1120,624.2 L1128,624.7 L1136,625.0 L1144,625.4 L1152,625.6 L1160,625.8 L1168,625.9 L1176,626.0 L1184,626.0 L1192,625.9 L1200,625.7" stroke="url(#nWave)" stroke-width="1.05" fill="none" opacity="0.52"><animateTransform attributeName="transform" type="translate" from="0 0" to="-600 0" dur="54s" repeatCount="indefinite"/></path>
+                <path d="M-600,660.4 L-592,659.4 L-584,658.4 L-576,657.3 L-568,656.2 L-560,655.1 L-552,653.9 L-544,652.8 L-536,651.6 L-528,650.4 L-520,649.3 L-512,648.1 L-504,647.0 L-496,645.9 L-488,644.9 L-480,643.9 L-472,643.0 L-464,642.1 L-456,641.3 L-448,640.6 L-440,640.0 L-432,639.4 L-424,638.9 L-416,638.6 L-408,638.3 L-400,638.1 L-392,638.0 L-384,638.0 L-376,638.1 L-368,638.3 L-360,638.6 L-352,639.0 L-344,639.5 L-336,640.1 L-328,640.7 L-320,641.5 L-312,642.3 L-304,643.2 L-296,644.1 L-288,645.1 L-280,646.1 L-272,647.2 L-264,648.3 L-256,649.5 L-248,650.6 L-240,651.8 L-232,653.0 L-224,654.2 L-216,655.3 L-208,656.4 L-200,657.5 L-192,658.6 L-184,659.6 L-176,660.5 L-168,661.4 L-160,662.3 L-152,663.0 L-144,663.7 L-136,664.3 L-128,664.8 L-120,665.3 L-112,665.6 L-104,665.8 L-96,666.0 L-88,666.0 L-80,665.9 L-72,665.8 L-64,665.5 L-56,665.2 L-48,664.7 L-40,664.2 L-32,663.6 L-24,662.9 L-16,662.1 L-8,661.3 L0,660.4 L8,659.4 L16,658.4 L24,657.3 L32,656.2 L40,655.1 L48,653.9 L56,652.8 L64,651.6 L72,650.4 L80,649.3 L88,648.1 L96,647.0 L104,645.9 L112,644.9 L120,643.9 L128,643.0 L136,642.1 L144,641.3 L152,640.6 L160,640.0 L168,639.4 L176,638.9 L184,638.6 L192,638.3 L200,638.1 L208,638.0 L216,638.0 L224,638.1 L232,638.3 L240,638.6 L248,639.0 L256,639.5 L264,640.1 L272,640.7 L280,641.5 L288,642.3 L296,643.2 L304,644.1 L312,645.1 L320,646.1 L328,647.2 L336,648.3 L344,649.5 L352,650.6 L360,651.8 L368,653.0 L376,654.2 L384,655.3 L392,656.4 L400,657.5 L408,658.6 L416,659.6 L424,660.5 L432,661.4 L440,662.3 L448,663.0 L456,663.7 L464,664.3 L472,664.8 L480,665.3 L488,665.6 L496,665.8 L504,666.0 L512,666.0 L520,665.9 L528,665.8 L536,665.5 L544,665.2 L552,664.7 L560,664.2 L568,663.6 L576,662.9 L584,662.1 L592,661.3 L600,660.4 L608,659.4 L616,658.4 L624,657.3 L632,656.2 L640,655.1 L648,653.9 L656,652.8 L664,651.6 L672,650.4 L680,649.3 L688,648.1 L696,647.0 L704,645.9 L712,644.9 L720,643.9 L728,643.0 L736,642.1 L744,641.3 L752,640.6 L760,640.0 L768,639.4 L776,638.9 L784,638.6 L792,638.3 L800,638.1 L808,638.0 L816,638.0 L824,638.1 L832,638.3 L840,638.6 L848,639.0 L856,639.5 L864,640.1 L872,640.7 L880,641.5 L888,642.3 L896,643.2 L904,644.1 L912,645.1 L920,646.1 L928,647.2 L936,648.3 L944,649.5 L952,650.6 L960,651.8 L968,653.0 L976,654.2 L984,655.3 L992,656.4 L1000,657.5 L1008,658.6 L1016,659.6 L1024,660.5 L1032,661.4 L1040,662.3 L1048,663.0 L1056,663.7 L1064,664.3 L1072,664.8 L1080,665.3 L1088,665.6 L1096,665.8 L1104,666.0 L1112,666.0 L1120,665.9 L1128,665.8 L1136,665.5 L1144,665.2 L1152,664.7 L1160,664.2 L1168,663.6 L1176,662.9 L1184,662.1 L1192,661.3 L1200,660.4" stroke="url(#nWave)" stroke-width="1.05" fill="none" opacity="0.47"><animateTransform attributeName="transform" type="translate" from="0 0" to="-600 0" dur="61s" repeatCount="indefinite"/></path>
+                <path d="M-600,692.9 L-592,691.4 L-584,690.0 L-576,688.5 L-568,687.1 L-560,685.7 L-552,684.4 L-544,683.2 L-536,682.0 L-528,680.9 L-520,679.9 L-512,679.1 L-504,678.3 L-496,677.6 L-488,677.0 L-480,676.6 L-472,676.3 L-464,676.1 L-456,676.0 L-448,676.1 L-440,676.2 L-432,676.5 L-424,677.0 L-416,677.5 L-408,678.2 L-400,679.0 L-392,679.8 L-384,680.8 L-376,681.9 L-368,683.1 L-360,684.3 L-352,685.6 L-344,687.0 L-336,688.4 L-328,689.8 L-320,691.3 L-312,692.8 L-304,694.3 L-296,695.8 L-288,697.3 L-280,698.8 L-272,700.2 L-264,701.6 L-256,702.9 L-248,704.2 L-240,705.4 L-232,706.5 L-224,707.6 L-216,708.5 L-208,709.4 L-200,710.1 L-192,710.7 L-184,711.2 L-176,711.6 L-168,711.8 L-160,712.0 L-152,712.0 L-144,711.9 L-136,711.6 L-128,711.3 L-120,710.8 L-112,710.2 L-104,709.4 L-96,708.6 L-88,707.7 L-80,706.7 L-72,705.5 L-64,704.3 L-56,703.1 L-48,701.7 L-40,700.3 L-32,698.9 L-24,697.5 L-16,696.0 L-8,694.5 L0,692.9 L8,691.4 L16,690.0 L24,688.5 L32,687.1 L40,685.7 L48,684.4 L56,683.2 L64,682.0 L72,680.9 L80,679.9 L88,679.1 L96,678.3 L104,677.6 L112,677.0 L120,676.6 L128,676.3 L136,676.1 L144,676.0 L152,676.1 L160,676.2 L168,676.5 L176,677.0 L184,677.5 L192,678.2 L200,679.0 L208,679.8 L216,680.8 L224,681.9 L232,683.1 L240,684.3 L248,685.6 L256,687.0 L264,688.4 L272,689.8 L280,691.3 L288,692.8 L296,694.3 L304,695.8 L312,697.3 L320,698.8 L328,700.2 L336,701.6 L344,702.9 L352,704.2 L360,705.4 L368,706.5 L376,707.6 L384,708.5 L392,709.4 L400,710.1 L408,710.7 L416,711.2 L424,711.6 L432,711.8 L440,712.0 L448,712.0 L456,711.9 L464,711.6 L472,711.3 L480,710.8 L488,710.2 L496,709.4 L504,708.6 L512,707.7 L520,706.7 L528,705.5 L536,704.3 L544,703.1 L552,701.7 L560,700.3 L568,698.9 L576,697.5 L584,696.0 L592,694.5 L600,692.9 L608,691.4 L616,690.0 L624,688.5 L632,687.1 L640,685.7 L648,684.4 L656,683.2 L664,682.0 L672,680.9 L680,679.9 L688,679.1 L696,678.3 L704,677.6 L712,677.0 L720,676.6 L728,676.3 L736,676.1 L744,676.0 L752,676.1 L760,676.2 L768,676.5 L776,677.0 L784,677.5 L792,678.2 L800,679.0 L808,679.8 L816,680.8 L824,681.9 L832,683.1 L840,684.3 L848,685.6 L856,687.0 L864,688.4 L872,689.8 L880,691.3 L888,692.8 L896,694.3 L904,695.8 L912,697.3 L920,698.8 L928,700.2 L936,701.6 L944,702.9 L952,704.2 L960,705.4 L968,706.5 L976,707.6 L984,708.5 L992,709.4 L1000,710.1 L1008,710.7 L1016,711.2 L1024,711.6 L1032,711.8 L1040,712.0 L1048,712.0 L1056,711.9 L1064,711.6 L1072,711.3 L1080,710.8 L1088,710.2 L1096,709.4 L1104,708.6 L1112,707.7 L1120,706.7 L1128,705.5 L1136,704.3 L1144,703.1 L1152,701.7 L1160,700.3 L1168,698.9 L1176,697.5 L1184,696.0 L1192,694.5 L1200,692.9" stroke="url(#nWave)" stroke-width="1.05" fill="none" opacity="0.42"><animateTransform attributeName="transform" type="translate" from="0 0" to="-600 0" dur="68s" repeatCount="indefinite"/></path>
+                <path d="M-600,726.9 L-592,725.6 L-584,724.4 L-576,723.4 L-568,722.5 L-560,721.7 L-552,721.0 L-544,720.6 L-536,720.2 L-528,720.0 L-520,720.0 L-512,720.1 L-504,720.4 L-496,720.8 L-488,721.4 L-480,722.1 L-472,723.0 L-464,724.0 L-456,725.1 L-448,726.3 L-440,727.7 L-432,729.1 L-424,730.7 L-416,732.3 L-408,734.0 L-400,735.7 L-392,737.5 L-384,739.3 L-376,741.2 L-368,743.0 L-360,744.9 L-352,746.7 L-344,748.5 L-336,750.2 L-328,751.9 L-320,753.5 L-312,755.0 L-304,756.4 L-296,757.8 L-288,759.0 L-280,760.1 L-272,761.1 L-264,761.9 L-256,762.7 L-248,763.2 L-240,763.6 L-232,763.9 L-224,764.0 L-216,764.0 L-208,763.7 L-200,763.4 L-192,762.9 L-184,762.2 L-176,761.5 L-168,760.5 L-160,759.5 L-152,758.3 L-144,757.0 L-136,755.6 L-128,754.1 L-120,752.5 L-112,750.9 L-104,749.1 L-96,747.4 L-88,745.6 L-80,743.7 L-72,741.9 L-64,740.1 L-56,738.2 L-48,736.4 L-40,734.7 L-32,733.0 L-24,731.3 L-16,729.7 L-8,728.3 L0,726.9 L8,725.6 L16,724.4 L24,723.4 L32,722.5 L40,721.7 L48,721.0 L56,720.6 L64,720.2 L72,720.0 L80,720.0 L88,720.1 L96,720.4 L104,720.8 L112,721.4 L120,722.1 L128,723.0 L136,724.0 L144,725.1 L152,726.3 L160,727.7 L168,729.1 L176,730.7 L184,732.3 L192,734.0 L200,735.7 L208,737.5 L216,739.3 L224,741.2 L232,743.0 L240,744.9 L248,746.7 L256,748.5 L264,750.2 L272,751.9 L280,753.5 L288,755.0 L296,756.4 L304,757.8 L312,759.0 L320,760.1 L328,761.1 L336,761.9 L344,762.7 L352,763.2 L360,763.6 L368,763.9 L376,764.0 L384,764.0 L392,763.7 L400,763.4 L408,762.9 L416,762.2 L424,761.5 L432,760.5 L440,759.5 L448,758.3 L456,757.0 L464,755.6 L472,754.1 L480,752.5 L488,750.9 L496,749.1 L504,747.4 L512,745.6 L520,743.7 L528,741.9 L536,740.1 L544,738.2 L552,736.4 L560,734.7 L568,733.0 L576,731.3 L584,729.7 L592,728.3 L600,726.9 L608,725.6 L616,724.4 L624,723.4 L632,722.5 L640,721.7 L648,721.0 L656,720.6 L664,720.2 L672,720.0 L680,720.0 L688,720.1 L696,720.4 L704,720.8 L712,721.4 L720,722.1 L728,723.0 L736,724.0 L744,725.1 L752,726.3 L760,727.7 L768,729.1 L776,730.7 L784,732.3 L792,734.0 L800,735.7 L808,737.5 L816,739.3 L824,741.2 L832,743.0 L840,744.9 L848,746.7 L856,748.5 L864,750.2 L872,751.9 L880,753.5 L888,755.0 L896,756.4 L904,757.8 L912,759.0 L920,760.1 L928,761.1 L936,761.9 L944,762.7 L952,763.2 L960,763.6 L968,763.9 L976,764.0 L984,764.0 L992,763.7 L1000,763.4 L1008,762.9 L1016,762.2 L1024,761.5 L1032,760.5 L1040,759.5 L1048,758.3 L1056,757.0 L1064,755.6 L1072,754.1 L1080,752.5 L1088,750.9 L1096,749.1 L1104,747.4 L1112,745.6 L1120,743.7 L1128,741.9 L1136,740.1 L1144,738.2 L1152,736.4 L1160,734.7 L1168,733.0 L1176,731.3 L1184,729.7 L1192,728.3 L1200,726.9" stroke="url(#nWave)" stroke-width="1.05" fill="none" opacity="0.37"><animateTransform attributeName="transform" type="translate" from="0 0" to="-600 0" dur="75s" repeatCount="indefinite"/></path>
+                <path d="M-600,770.2 L-592,770.0 L-584,770.0 L-576,770.3 L-568,770.6 L-560,771.2 L-552,772.0 L-544,772.9 L-536,773.9 L-528,775.2 L-520,776.5 L-512,778.1 L-504,779.7 L-496,781.4 L-488,783.3 L-480,785.2 L-472,787.3 L-464,789.3 L-456,791.5 L-448,793.6 L-440,795.8 L-432,798.0 L-424,800.1 L-416,802.3 L-408,804.4 L-400,806.4 L-392,808.4 L-384,810.2 L-376,812.0 L-368,813.7 L-360,815.2 L-352,816.6 L-344,817.8 L-336,818.9 L-328,819.9 L-320,820.7 L-312,821.3 L-304,821.7 L-296,821.9 L-288,822.0 L-280,821.9 L-272,821.6 L-264,821.1 L-256,820.4 L-248,819.6 L-240,818.6 L-232,817.5 L-224,816.2 L-216,814.7 L-208,813.1 L-200,811.4 L-192,809.6 L-184,807.7 L-176,805.8 L-168,803.7 L-160,801.6 L-152,799.5 L-144,797.3 L-136,795.1 L-128,792.9 L-120,790.8 L-112,788.7 L-104,786.6 L-96,784.6 L-88,782.7 L-80,780.9 L-72,779.2 L-64,777.6 L-56,776.1 L-48,774.8 L-40,773.6 L-32,772.6 L-24,771.7 L-16,771.0 L-8,770.5 L0,770.2 L8,770.0 L16,770.0 L24,770.3 L32,770.6 L40,771.2 L48,772.0 L56,772.9 L64,773.9 L72,775.2 L80,776.5 L88,778.1 L96,779.7 L104,781.4 L112,783.3 L120,785.2 L128,787.3 L136,789.3 L144,791.5 L152,793.6 L160,795.8 L168,798.0 L176,800.1 L184,802.3 L192,804.4 L200,806.4 L208,808.4 L216,810.2 L224,812.0 L232,813.7 L240,815.2 L248,816.6 L256,817.8 L264,818.9 L272,819.9 L280,820.7 L288,821.3 L296,821.7 L304,821.9 L312,822.0 L320,821.9 L328,821.6 L336,821.1 L344,820.4 L352,819.6 L360,818.6 L368,817.5 L376,816.2 L384,814.7 L392,813.1 L400,811.4 L408,809.6 L416,807.7 L424,805.8 L432,803.7 L440,801.6 L448,799.5 L456,797.3 L464,795.1 L472,792.9 L480,790.8 L488,788.7 L496,786.6 L504,784.6 L512,782.7 L520,780.9 L528,779.2 L536,777.6 L544,776.1 L552,774.8 L560,773.6 L568,772.6 L576,771.7 L584,771.0 L592,770.5 L600,770.2 L608,770.0 L616,770.0 L624,770.3 L632,770.6 L640,771.2 L648,772.0 L656,772.9 L664,773.9 L672,775.2 L680,776.5 L688,778.1 L696,779.7 L704,781.4 L712,783.3 L720,785.2 L728,787.3 L736,789.3 L744,791.5 L752,793.6 L760,795.8 L768,798.0 L776,800.1 L784,802.3 L792,804.4 L800,806.4 L808,808.4 L816,810.2 L824,812.0 L832,813.7 L840,815.2 L848,816.6 L856,817.8 L864,818.9 L872,819.9 L880,820.7 L888,821.3 L896,821.7 L904,821.9 L912,822.0 L920,821.9 L928,821.6 L936,821.1 L944,820.4 L952,819.6 L960,818.6 L968,817.5 L976,816.2 L984,814.7 L992,813.1 L1000,811.4 L1008,809.6 L1016,807.7 L1024,805.8 L1032,803.7 L1040,801.6 L1048,799.5 L1056,797.3 L1064,795.1 L1072,792.9 L1080,790.8 L1088,788.7 L1096,786.6 L1104,784.6 L1112,782.7 L1120,780.9 L1128,779.2 L1136,777.6 L1144,776.1 L1152,774.8 L1160,773.6 L1168,772.6 L1176,771.7 L1184,771.0 L1192,770.5 L1200,770.2" stroke="url(#nWave)" stroke-width="1.05" fill="none" opacity="0.32"><animateTransform attributeName="transform" type="translate" from="0 0" to="-600 0" dur="82s" repeatCount="indefinite"/></path>
+                <path d="M-600,831.0 L-592,832.5 L-584,834.2 L-576,836.0 L-568,837.9 L-560,840.0 L-552,842.1 L-544,844.4 L-536,846.8 L-528,849.2 L-520,851.7 L-512,854.2 L-504,856.7 L-496,859.2 L-488,861.7 L-480,864.1 L-472,866.5 L-464,868.8 L-456,871.0 L-448,873.2 L-440,875.1 L-432,877.0 L-424,878.7 L-416,880.3 L-408,881.7 L-400,882.9 L-392,883.9 L-384,884.7 L-376,885.4 L-368,885.8 L-360,886.0 L-352,886.0 L-344,885.8 L-336,885.3 L-328,884.7 L-320,883.9 L-312,882.9 L-304,881.6 L-296,880.2 L-288,878.7 L-280,877.0 L-272,875.1 L-264,873.1 L-256,871.0 L-248,868.7 L-240,866.4 L-232,864.0 L-224,861.6 L-216,859.1 L-208,856.6 L-200,854.1 L-192,851.6 L-184,849.1 L-176,846.7 L-168,844.3 L-160,842.1 L-152,839.9 L-144,837.8 L-136,835.9 L-128,834.1 L-120,832.5 L-112,831.0 L-104,829.7 L-96,828.6 L-88,827.7 L-80,826.9 L-72,826.4 L-64,826.1 L-56,826.0 L-48,826.1 L-40,826.4 L-32,827.0 L-24,827.7 L-16,828.6 L-8,829.7 L0,831.0 L8,832.5 L16,834.2 L24,836.0 L32,837.9 L40,840.0 L48,842.1 L56,844.4 L64,846.8 L72,849.2 L80,851.7 L88,854.2 L96,856.7 L104,859.2 L112,861.7 L120,864.1 L128,866.5 L136,868.8 L144,871.0 L152,873.2 L160,875.1 L168,877.0 L176,878.7 L184,880.3 L192,881.7 L200,882.9 L208,883.9 L216,884.7 L224,885.4 L232,885.8 L240,886.0 L248,886.0 L256,885.8 L264,885.3 L272,884.7 L280,883.9 L288,882.9 L296,881.6 L304,880.2 L312,878.7 L320,877.0 L328,875.1 L336,873.1 L344,871.0 L352,868.7 L360,866.4 L368,864.0 L376,861.6 L384,859.1 L392,856.6 L400,854.1 L408,851.6 L416,849.1 L424,846.7 L432,844.3 L440,842.1 L448,839.9 L456,837.8 L464,835.9 L472,834.1 L480,832.5 L488,831.0 L496,829.7 L504,828.6 L512,827.7 L520,826.9 L528,826.4 L536,826.1 L544,826.0 L552,826.1 L560,826.4 L568,827.0 L576,827.7 L584,828.6 L592,829.7 L600,831.0 L608,832.5 L616,834.2 L624,836.0 L632,837.9 L640,840.0 L648,842.1 L656,844.4 L664,846.8 L672,849.2 L680,851.7 L688,854.2 L696,856.7 L704,859.2 L712,861.7 L720,864.1 L728,866.5 L736,868.8 L744,871.0 L752,873.2 L760,875.1 L768,877.0 L776,878.7 L784,880.3 L792,881.7 L800,882.9 L808,883.9 L816,884.7 L824,885.4 L832,885.8 L840,886.0 L848,886.0 L856,885.8 L864,885.3 L872,884.7 L880,883.9 L888,882.9 L896,881.6 L904,880.2 L912,878.7 L920,877.0 L928,875.1 L936,873.1 L944,871.0 L952,868.7 L960,866.4 L968,864.0 L976,861.6 L984,859.1 L992,856.6 L1000,854.1 L1008,851.6 L1016,849.1 L1024,846.7 L1032,844.3 L1040,842.1 L1048,839.9 L1056,837.8 L1064,835.9 L1072,834.1 L1080,832.5 L1088,831.0 L1096,829.7 L1104,828.6 L1112,827.7 L1120,826.9 L1128,826.4 L1136,826.1 L1144,826.0 L1152,826.1 L1160,826.4 L1168,827.0 L1176,827.7 L1184,828.6 L1192,829.7 L1200,831.0" stroke="url(#nWave)" stroke-width="1.05" fill="none" opacity="0.27"><animateTransform attributeName="transform" type="translate" from="0 0" to="-600 0" dur="89s" repeatCount="indefinite"/></path>
+                <rect width="600" height="904" fill="url(#nGlint)"><animate attributeName="opacity" values=".7;1;.7" dur="6s" repeatCount="indefinite"/></rect>
+              </g>
+
+              <!-- horizon: glow, line, and light running out from the centre -->
+              <ellipse cx="300" cy="534" rx="80" ry="16" fill="#fff0c4" filter="url(#nBig)" opacity=".75"><animate attributeName="rx" values="70;100;70" dur="7s" repeatCount="indefinite"/></ellipse>
+              <path d="M0 576 Q300 492 600 576" stroke="#f6c46e" stroke-width="8" fill="none" filter="url(#nSoft)" opacity=".85"/>
+              <path d="M0 576 Q300 492 600 576" stroke="url(#nHz)" stroke-width="3.4" fill="none"/>
+              <path id="nHzL" d="M300 534 Q165 534 0 576" stroke="#fff8e6" stroke-width="2.6" fill="none" stroke-linecap="round" filter="url(#nGlow)" pathLength="100" stroke-dasharray="8 200">
+                <animate attributeName="stroke-dashoffset" values="10;-100" dur="3.6s" repeatCount="indefinite"/>
+                <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.75;1" dur="3.6s" repeatCount="indefinite"/>
+              </path>
+              <path d="M300 534 Q435 534 600 576" stroke="#fff8e6" stroke-width="2.6" fill="none" stroke-linecap="round" filter="url(#nGlow)" pathLength="100" stroke-dasharray="8 200">
+                <animate attributeName="stroke-dashoffset" values="10;-100" dur="3.6s" repeatCount="indefinite"/>
+                <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.1;.75;1" dur="3.6s" repeatCount="indefinite"/>
+              </path>
+
+              <!-- the gateway -->
+              <path d="M264 534 V390 A36 36 0 0 1 336 390 V534 Z" fill="url(#nGate)">
+                <animate attributeName="opacity" values=".65;1;.65" dur="4.2s" repeatCount="indefinite"/>
+              </path>
+              <path d="M264 534 V390 A36 36 0 0 1 336 390 V534" stroke="#ffe6a8" stroke-width="7" fill="none" filter="url(#nSoft)" opacity=".7"><animate attributeName="opacity" values=".45;.9;.45" dur="4.2s" repeatCount="indefinite"/></path>
+              <path d="M264 534 V390 A36 36 0 0 1 336 390 V534" stroke="#fff7e2" stroke-width="2.6" fill="none"/>
+              <path d="M264 534 V390 A36 36 0 0 1 336 390 V534" stroke="#ffffff" stroke-width="3.4" fill="none" stroke-linecap="round" filter="url(#nGlow)" pathLength="100" stroke-dasharray="14 86">
+                <animate attributeName="stroke-dashoffset" values="0;-100" dur="6s" repeatCount="indefinite"/>
+              </path>
+              <ellipse cx="300" cy="530" rx="60" ry="14" fill="#ffffff" filter="url(#nSoft)"><animate attributeName="opacity" values=".55;1;.55" dur="4.2s" repeatCount="indefinite"/></ellipse>
+            </g>
+
+            <!-- the gold ring, with light travelling around it -->
+            <ellipse cx="300" cy="453" rx="275" ry="426" fill="none" stroke="#e6b260" stroke-width="12" filter="url(#nSoft)" opacity=".35"/>
+            <ellipse cx="300" cy="453" rx="275" ry="426" fill="none" stroke="url(#nRing)" stroke-width="7"/>
+            <ellipse cx="300" cy="453" rx="272.5" ry="423.5" fill="none" stroke="#fff1cc" stroke-width=".8" opacity=".7"/>
+            <ellipse cx="300" cy="453" rx="275" ry="426" fill="none" stroke="#fff4d6" stroke-width="3.6" stroke-linecap="round" filter="url(#nGlow)" pathLength="1000" stroke-dasharray="45 955" opacity=".85">
+              <animate attributeName="stroke-dashoffset" values="0;-1000" dur="10s" repeatCount="indefinite"/>
+            </ellipse>
+          </svg>
+          <div class="edge" aria-hidden="true"></div>
+          <div class="shine" aria-hidden="true"></div>
+        </div>
+      </div>
+    </div>
+    <div class="word" role="img" aria-label="New Era Movement">
+      <div class="ne" aria-hidden="true"><span class="g">NEW ER</span><span class="g lam">V</span></div>
+      <div class="mv" aria-hidden="true"><i></i><span>MOVEMENT</span><i></i></div>
+    </div>
+    <section class="initiatives" aria-label="New Era Movement initiatives">
+      <div class="initiative cp" role="img" aria-label="Conscious Pulse, a New Era Movement initiative">
+        <svg viewBox="0 0 200 200" aria-hidden="true">
+          <defs>
+            <filter id="cGlow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="2.4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+            <linearGradient id="cLine" x1="0" y1="0" x2="200" y2="0" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#e9fbff"/><stop offset=".55" stop-color="#bff6ff"/><stop offset="1" stop-color="#4fd8ff"/></linearGradient>
+          </defs>
+          <circle cx="100" cy="100" r="84" fill="none" stroke="#1d63ff" stroke-width="1.2" opacity=".75"/>
+          <circle cx="100" cy="100" r="88" fill="none" stroke="#c9f6ff" stroke-width="2" filter="url(#cGlow)"/>
+          <g id="cDots"></g>
+          <path id="cEcg" d="M-6 100 H40 L46 92 L52 100 H58 L66 34 L75 158 L83 100 L89 108 L95 100 C108 112 118 70 138 74 C156 78 160 118 182 112" fill="none" stroke="url(#cLine)" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round" filter="url(#cGlow)"/>
+          <path d="M-6 100 H40 L46 92 L52 100 H58 L66 34 L75 158 L83 100 L89 108 L95 100 C108 112 118 70 138 74 C156 78 160 118 182 112" fill="none" stroke="#ffffff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" filter="url(#cGlow)" pathLength="100" stroke-dasharray="12 112">
+            <animate attributeName="stroke-dashoffset" values="12;-100" dur="2.6s" repeatCount="indefinite" calcMode="spline" keySplines=".35 0 .65 1"/>
+            <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.08;.85;1" dur="2.6s" repeatCount="indefinite"/>
+          </path>
+        </svg>
+        <span><span class="name">Conscious <b>Pulse</b></span><span class="tag">A New Era Movement initiative</span></span>
+      </div>
+      <a class="initiative pasai" href="https://pasai.art" aria-label="Pasai, a New Era Movement initiative">
+        <svg viewBox="0 0 100 100" aria-hidden="true">
+          <defs>
+            <linearGradient id="pmg" x1="0" y1="1" x2="1" y2="0">
+              <stop offset="0" stop-color="#e8c98a"/><stop offset=".55" stop-color="#f3e3bd"/><stop offset="1" stop-color="#5fe0d2"/>
+            </linearGradient>
+            <radialGradient id="pmsky" cx="50%" cy="20%" r="70%">
+              <stop offset="0" stop-color="#1fb7b0" stop-opacity=".35"/><stop offset="1" stop-color="#000516" stop-opacity="0"/>
+            </radialGradient>
+            <filter id="pmglow" x="-50%" y="-50%" width="200%" height="200%">
+              <feGaussianBlur stdDeviation="1.6" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+            <clipPath id="pmclip"><circle cx="50" cy="50" r="43"/></clipPath>
+          </defs>
+          <circle cx="50" cy="50" r="43" fill="url(#pmsky)"/>
+          <g clip-path="url(#pmclip)">
+            <path d="M4 74 Q50 60 96 74 L96 100 L4 100 Z" fill="#06143a" opacity=".9"/>
+            <path d="M4 74 Q50 60 96 74" stroke="#e8c98a" stroke-width="1.2" fill="none" filter="url(#pmglow)"/>
+          </g>
+          <path id="pmpath" d="M50 67 L40 52 L57 41 L45 29 L50 17" stroke="#7fe3d6" stroke-width=".9" fill="none" opacity=".65"/>
+          <g fill="#bff3ea" filter="url(#pmglow)">
+            <circle class="pm-node" cx="50" cy="67" r="2.6" fill="#f3e3bd"/>
+            <circle class="pm-node" cx="40" cy="52" r="1.6"/>
+            <circle class="pm-node" cx="57" cy="41" r="1.6"/>
+            <circle class="pm-node" cx="45" cy="29" r="1.6"/>
+          </g>
+          <path class="pm-star" d="M50 10 L51.6 15.4 L57 17 L51.6 18.6 L50 24 L48.4 18.6 L43 17 L48.4 15.4 Z" fill="#fff6dc" filter="url(#pmglow)"/>
+          <circle r="1.8" fill="#ffffff" filter="url(#pmglow)">
+            <animateMotion dur="3.2s" repeatCount="indefinite" keyPoints="0;1;1" keyTimes="0;.6;1" calcMode="linear"><mpath href="#pmpath"/></animateMotion>
+            <animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;.08;.55;.62;1" dur="3.2s" repeatCount="indefinite"/>
+          </circle>
+          <circle class="pm-ring" cx="50" cy="50" r="43" fill="none" stroke="url(#pmg)" stroke-width="1.6" filter="url(#pmglow)"/>
+        </svg>
+        <span><span class="name">Pasai</span><span class="tag">A New Era Movement initiative</span></span>
+      </a>
+    </section>
+    <blockquote>
+      <p>“Preparing for The New Era.”</p>
+      <footer>— The Founder</footer>
+    </blockquote>
+  </main>
+<script>
+  // light motes rising out of the gateway into the beam (vector, crisp at any size)
+  (function () {
+    var g = document.getElementById('nMotes'); if (!g) return;
+    var NS = 'http://www.w3.org/2000/svg', still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var M = [], N = 110;
+    function r(a, b) { return a + Math.random() * (b - a); }
+    function spawn(m, init) {
+      m.y = init ? r(40, 520) : r(470, 525);
+      m.x0 = 300 + r(-1, 1) * r(4, 30);
+      m.v = r(.15, .5); m.s = r(.8, 2.6); m.ph = r(0, 6.3); m.tw = r(1, 3);
+      m.gold = Math.random() < .7;
+      m.el.setAttribute('r', m.s.toFixed(2));
+      m.el.setAttribute('fill', m.gold ? '#ffd987' : '#d6fff6');
+    }
+    for (var i = 0; i < N; i++) {
+      var c = document.createElementNS(NS, 'circle'); g.appendChild(c);
+      var m = { el: c }; spawn(m, true); M.push(m);
+    }
+    // fixed stars scattered through the sky, twinkling
+    var S = [];
+    for (var k = 0; k < 46; k++) {
+      var sy = r(60, 470), sx = 300 + r(-1, 1) * (60 + (534 - sy) * .35) * r(.3, 1.6);
+      var st = document.createElementNS(NS, 'circle');
+      st.setAttribute('cx', sx.toFixed(1)); st.setAttribute('cy', sy.toFixed(1));
+      st.setAttribute('r', r(.8, 2).toFixed(2)); st.setAttribute('fill', Math.random() < .8 ? '#ffe3a0' : '#e6fffa');
+      g.appendChild(st); S.push({ el: st, ph: r(0, 6.3), sp: r(.5, 1.8) });
+    }
+    var t0 = performance.now();
+    function tick(now) {
+      var t = (now - t0) / 1000;
+      for (var i = 0; i < N; i++) {
+        var m = M[i];
+        if (!still) { m.y -= m.v; if (m.y < 20) spawn(m, false); }
+        var h = 534 - m.y, spread = 1 + h / 120;              // cone widens as it rises
+        var x = 300 + (m.x0 - 300) * spread + Math.sin(t * .6 + m.ph) * 3;
+        var fadeIn = Math.min(1, h / 40), fadeOut = Math.min(1, m.y / 120);
+        var tw = .55 + .45 * Math.sin(t * m.tw + m.ph);
+        m.el.setAttribute('cx', x.toFixed(1)); m.el.setAttribute('cy', m.y.toFixed(1));
+        m.el.setAttribute('opacity', Math.min(1, fadeIn * fadeOut * tw * 1.25).toFixed(2));
+      }
+      for (var q = 0; q < S.length; q++) S[q].el.setAttribute('opacity', (.35 + .65 * Math.pow((Math.sin(t * S[q].sp + S[q].ph) + 1) / 2, 2)).toFixed(2));
+      if (!still) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  })();
+
+  // Conscious Pulse: dotted wave ribbon breathing
+  (function () {
+    var g = document.getElementById('cDots'); if (!g) return;
+    var NS = 'http://www.w3.org/2000/svg', still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var D = [];
+    for (var k = 0; k < 9; k++) for (var x = 104; x <= 196; x += 4.6) {
+      var c = document.createElementNS(NS, 'circle');
+      c.setAttribute('r', (1.15 - k * .06).toFixed(2));
+      c.setAttribute('fill', k < 3 ? '#9ff3ff' : '#5fd0f0');
+      g.appendChild(c); D.push({ el: c, k: k, x: x });
+    }
+    var t0 = performance.now();
+    function tick(now) {
+      var t = (now - t0) / 1000;
+      for (var i = 0; i < D.length; i++) {
+        var d = D[i], u = (d.x - 100) / 96, spread = (d.k - 4) * (2 + u * 9);
+        var y = 100 - 26 * Math.sin(u * 5.2 - .9 + Math.sin(t * .8) * .35) * (0.4 + u * .6) + spread;
+        var inside = Math.hypot(d.x - 100, y - 100) < 92 ? 1 : .55;
+        d.el.setAttribute('cx', d.x.toFixed(1)); d.el.setAttribute('cy', y.toFixed(1));
+        d.el.setAttribute('opacity', ((.95 - d.k * .085) * (.35 + u * .75) * inside).toFixed(2));
+      }
+      if (!still) requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  })();
+
+  // gentle tilt toward the pointer (desktop only)
+  (function () {
+    var t = document.getElementById('tilt');
+    if (!t || matchMedia('(prefers-reduced-motion: reduce)').matches || !matchMedia('(pointer:fine)').matches) return;
+    addEventListener('pointermove', function (e) {
+      var x = e.clientX / innerWidth - .5, y = e.clientY / innerHeight - .5;
+      t.style.transform = 'rotateY(' + (x * 14) + 'deg) rotateX(' + (-y * 10) + 'deg)';
+    });
+    document.addEventListener('pointerleave', function () { t.style.transform = ''; });
+  })();
+</script>
+</body>
+</html>
