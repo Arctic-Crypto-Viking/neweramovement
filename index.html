@@ -23,8 +23,8 @@
   body {
     background:var(--bg); color:var(--ink);
     font-family:"Montserrat",system-ui,sans-serif;
-    display:flex; align-items:center; justify-content:center;
-    overflow:hidden; min-height:100svh;
+    display:flex; justify-content:center;
+    overflow-x:hidden; min-height:100svh;
   }
 
   /* light rays falling onto the emblem from above */
@@ -61,11 +61,18 @@
   }
   @keyframes dust { to { background-position:0 -600px; } }
 
-  main { position:relative; z-index:1; text-align:center; padding:2rem 1.5rem; }
+  main { position:relative; z-index:1; text-align:center; padding:2rem 1.5rem; margin:auto 0; }
 
   /* 3D stage for the emblem */
   .stage { perspective:1100px; width:min(34vw,170px); margin:0 auto; }
   @media (max-height:760px) { .stage { width:min(30vw,130px); } }
+  @media (max-height:600px) {
+    main { padding:1.2rem 1.5rem; }
+    .stage { width:min(26vw,96px); }
+    .word { margin-top:1rem; } .ne { font-size:clamp(1.6rem,4.6vw,2.4rem); }
+    .initiatives { margin-top:1.3rem; } blockquote { margin-top:1.3rem; }
+    blockquote p { font-size:clamp(1.2rem,3vw,1.7rem); }
+  }
   .tilt  { transform-style:preserve-3d; transition:transform .7s cubic-bezier(.2,.7,.2,1); }
   .mark {
     position:relative; transform-style:preserve-3d; opacity:0;
