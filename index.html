@@ -44,10 +44,10 @@
   }
   @keyframes rays { 0% { opacity:.55; transform:translateX(-50%) rotate(-1.5deg); } 100% { opacity:1; transform:translateX(-50%) rotate(1.5deg); } }
 
-  main { position:relative; z-index:1; text-align:center; padding:2.2rem 1.5rem; margin:auto 0; }
+  main { position:relative; z-index:1; text-align:center; padding:1.6rem 1.5rem; margin:auto 0; }
 
   /* ---------- emblem ---------- */
-  .stage { perspective:1100px; width:min(36vw,176px); margin:0 auto; }
+  .stage { perspective:1100px; width:min(36vw,160px); margin:0 auto; }
   .tilt  { transform-style:preserve-3d; transition:transform .7s cubic-bezier(.2,.7,.2,1); }
   .mark  { position:relative; transform-style:preserve-3d; opacity:0;
            animation:enter 2.4s cubic-bezier(.2,.7,.2,1) .2s forwards, sway 14s ease-in-out 2.6s infinite; }
@@ -91,42 +91,39 @@
   .mv i { display:block; width:2.6em; height:1px; background:linear-gradient(90deg,transparent,#d9b273); }
   .mv i:last-child { transform:scaleX(-1); }
 
-  /* ---------- initiatives ---------- */
-  .initiatives { --icon:clamp(54px,7vw,66px); --gap:1.6rem; position:relative; width:min(80vw,270px); margin-left:auto; margin-right:auto;
-                 display:flex; flex-direction:column; align-items:flex-start; gap:var(--gap);
-                 margin-top:2.3rem; opacity:0; animation:rise 1.6s ease 2.0s forwards; }
-  .initiative { display:flex; align-items:center; gap:.85rem; width:100%;
-                text-decoration:none; color:var(--ink); transition:transform .4s ease, filter .4s ease; }
-  a.initiative:hover { transform:translateY(-2px); filter:brightness(1.15); }
-  .initiative .icon { width:var(--icon); height:var(--icon); flex:none; display:block; overflow:visible; }
-  .initiative img.icon { object-fit:contain; transform:scale(1.08); }
-  .initiative .name { font-family:"Montserrat",system-ui,sans-serif; font-weight:300; font-size:clamp(1.2rem,2.8vw,1.55rem);
-                      letter-spacing:.01em; line-height:1; white-space:nowrap; color:var(--ink); }
-  .initiative .name b { font-weight:600; }
-
-  /* a thread of light rising from Conscious Pulse into Pasai */
-  .thread { position:absolute; left:calc(var(--icon) / 2 - .5px); top:calc(var(--icon) + 3px); width:1px;
-            height:calc(var(--gap) - 6px); overflow:hidden;
-            background:linear-gradient(to top, rgba(140,230,255,.55), rgba(214,248,255,.25)); }
-  .thread::after { content:""; position:absolute; left:-1px; width:3px; height:45%; border-radius:2px;
-            background:linear-gradient(to top, transparent, #ffffff, transparent); filter:blur(.4px);
-            animation:ascend 2.4s cubic-bezier(.45,0,.55,1) infinite; }
-  @keyframes ascend { 0% { top:110%; opacity:0; } 20% { opacity:1; } 80% { opacity:1; } 100% { top:-50%; opacity:0; } }
+  /* ---------- initiatives: matched orbs on one rising axis ---------- */
+  .initiatives { --orb:clamp(66px,8.4vw,84px); display:flex; flex-direction:column; align-items:center;
+                 margin-top:.9rem; opacity:0; animation:rise 1.6s ease 2.0s forwards; }
+  .initiative { display:flex; flex-direction:column; align-items:center; gap:.75rem; text-decoration:none; color:inherit; }
+  .initiative .orb { width:var(--orb); height:var(--orb); display:block; overflow:visible;
+                     filter:drop-shadow(0 10px 16px rgba(0,0,0,.55)) drop-shadow(0 0 14px rgba(110,230,220,.14));
+                     transition:transform .5s cubic-bezier(.2,.7,.2,1), filter .5s ease; }
+  a.initiative:hover .orb { transform:translateY(-2px) scale(1.04);
+                     filter:drop-shadow(0 12px 18px rgba(0,0,0,.55)) drop-shadow(0 0 22px rgba(232,201,138,.28)); }
+  .initiative .label { font-family:"Montserrat",system-ui,sans-serif; font-weight:400; font-size:clamp(.62rem,1.3vw,.74rem);
+                       letter-spacing:.5em; padding-left:.5em; color:#cfeeea; white-space:nowrap; }
+  /* the thread: light rising from Conscious Pulse, through Pasai, into the New Era */
+  .thread { position:relative; display:block; width:1px; height:clamp(26px,4.2vh,40px); margin:.75rem 0;
+            background:linear-gradient(to top, rgba(143,233,255,0), rgba(143,233,255,.5) 25%, rgba(255,230,176,.5) 75%, rgba(255,230,176,0)); }
+  .thread i { position:absolute; left:-1px; width:3px; height:40%; border-radius:2px;
+              background:linear-gradient(to top, transparent, #fff, transparent); animation:ascend 2.6s cubic-bezier(.45,0,.55,1) infinite; }
+  .thread:first-child i { animation-delay:1.3s; }
+  @keyframes ascend { 0% { top:100%; opacity:0; } 20% { opacity:1; } 80% { opacity:1; } 100% { top:-40%; opacity:0; } }
 
   blockquote { margin-top:2.4rem; opacity:0; animation:rise 1.6s ease 2.4s forwards; }
   blockquote p { font-family:"Cormorant Garamond",Georgia,serif; font-style:italic; font-weight:300; font-size:clamp(1.4rem,4vw,2.2rem); line-height:1.25; }
   blockquote footer { margin-top:.9rem; font-size:.72rem; letter-spacing:.32em; text-transform:uppercase; color:var(--muted); }
   @keyframes rise { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:none; } }
 
-  @media (max-height:780px) { .stage { width:min(30vw,136px); } .initiatives { margin-top:1.6rem; --gap:1.3rem; } blockquote { margin-top:1.6rem; } }
+  @media (max-height:860px) { .stage { width:min(30vw,138px); } .initiatives { --orb:clamp(58px,7vw,70px); } blockquote { margin-top:1.8rem; } }
   @media (max-height:620px) {
     main { padding:1.2rem 1.5rem; } .stage { width:min(26vw,100px); }
     .word { margin-top:1rem; } .ne { font-size:clamp(1.6rem,4.6vw,2.4rem); }
-    .initiatives { margin-top:1.1rem; --gap:1rem; --icon:46px; }
+    .initiatives { --orb:50px; } .thread { height:18px; margin:.45rem 0; } .initiative { gap:.5rem; }
     blockquote { margin-top:1.1rem; } blockquote p { font-size:clamp(1.2rem,3vw,1.7rem); }
   }
   @media (prefers-reduced-motion:reduce) {
-    .rays,.mark,.emblem,.shine,.edge,.word,.ne .g,.initiatives,.thread::after,blockquote { animation:none !important; opacity:1; transform:none; }
+    .rays,.mark,.emblem,.shine,.edge,.word,.ne .g,.initiatives,.thread i,blockquote { animation:none !important; opacity:1; transform:none; }
   }
 </style>
 </head>
@@ -189,43 +186,116 @@
     </div>
 
     <section class="initiatives" aria-label="The New Era Movement initiatives">
-      <span class="thread" aria-hidden="true"></span>
-      <a class="initiative" href="https://pasai.art" aria-label="Pasai">
-        <svg class="icon" viewBox="0 0 100 100" aria-hidden="true">
-          <defs>
-            <radialGradient id="pIn" cx="50" cy="30" r="56" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#0d3f6e" stop-opacity=".55"/><stop offset="1" stop-color="#000516" stop-opacity="0"/></radialGradient>
-            <filter id="pGlow" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="1.1" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-            <clipPath id="pClip"><circle cx="50" cy="50" r="41.5"/></clipPath>
-          </defs>
-          <circle cx="50" cy="50" r="41.5" fill="url(#pIn)"/>
-          <g clip-path="url(#pClip)">
-            <path d="M6 72 Q50 58 94 72 L94 100 L6 100 Z" fill="#06123a" opacity=".85"/>
-            <path d="M6 72 Q50 58 94 72" stroke="#bff6ff" stroke-width="1.1" fill="none"/>
-          </g>
-          <path id="pPath" d="M50 65 L39.5 52 L57 41 L45 29.5 L50 18.5" stroke="#7fe7ff" stroke-width=".8" fill="none" opacity=".75"/>
-          <g fill="#bff6ff">
-            <circle cx="50" cy="65" r="2.1" fill="#ffffff"/>
-            <circle cx="39.5" cy="52" r="1.35"/><circle cx="57" cy="41" r="1.35"/><circle cx="45" cy="29.5" r="1.35"/>
-          </g>
-          <path d="M50 11.5 L51.4 16.9 L56.8 18.3 L51.4 19.7 L50 25.1 L48.6 19.7 L43.2 18.3 L48.6 16.9 Z" fill="#ffffff" filter="url(#pGlow)">
-            <animateTransform attributeName="transform" type="scale" values="1;1.18;1" additive="sum" dur="3.2s" repeatCount="indefinite" calcMode="spline" keySplines=".4 0 .6 1;.4 0 .6 1"/>
-            <animateTransform attributeName="transform" type="translate" values="0 0;-9 -3.3;0 0" additive="sum" dur="3.2s" repeatCount="indefinite" calcMode="spline" keySplines=".4 0 .6 1;.4 0 .6 1"/>
-          </path>
-          <circle r="1.7" fill="#ffffff" filter="url(#pGlow)">
-            <animateMotion dur="3.2s" repeatCount="indefinite" keyPoints="0;1;1" keyTimes="0;.6;1" calcMode="linear"><mpath href="#pPath"/></animateMotion>
-            <animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;.08;.55;.62;1" dur="3.2s" repeatCount="indefinite"/>
-          </circle>
-          <circle cx="50" cy="50" r="41.5" fill="none" stroke="#1d63ff" stroke-width="1" opacity=".8"/>
-          <circle cx="50" cy="50" r="44" fill="none" stroke="#d6f8ff" stroke-width="1.6" filter="url(#pGlow)"/>
-          <circle cx="50" cy="50" r="44" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" pathLength="100" stroke-dasharray="6 94" filter="url(#pGlow)">
-            <animate attributeName="stroke-dashoffset" values="0;-100" dur="7s" repeatCount="indefinite"/>
-          </circle>
-        </svg>
-        <span class="name"><b>Pasai</b></span>
+      <span class="thread" aria-hidden="true"><i></i></span>
+      <a class="initiative" href="https://pasai.art">
+        <svg class="orb" viewBox="0 0 120 120" aria-hidden="true"><defs>
+    <linearGradient id="paGold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fbe6b2"/><stop offset=".32" stop-color="#d6a056"/>
+      <stop offset=".58" stop-color="#f7d58e"/><stop offset=".82" stop-color="#b47c36"/><stop offset="1" stop-color="#e9c27c"/>
+    </linearGradient>
+    <radialGradient id="paGlass" cx="60" cy="34" r="74" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#1aa7ab"/><stop offset=".38" stop-color="#0b6476"/>
+      <stop offset=".72" stop-color="#04324c"/><stop offset="1" stop-color="#011a30"/>
+    </radialGradient>
+    <radialGradient id="paRim" cx="60" cy="60" r="51" gradientUnits="userSpaceOnUse">
+      <stop offset=".72" stop-color="#000516" stop-opacity="0"/><stop offset="1" stop-color="#000516" stop-opacity=".6"/>
+    </radialGradient>
+    <linearGradient id="paGloss" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity=".16"/><stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="paGlow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="1.1" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="paSoft" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="2.4"/></filter>
+    <clipPath id="paClip"><circle cx="60" cy="60" r="51"/></clipPath>
+    <linearGradient id="paSea" x1="0" y1="66" x2="0" y2="112" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#1a3a86"/><stop offset=".35" stop-color="#0b2060"/><stop offset="1" stop-color="#020a2a"/>
+    </linearGradient>
+    <linearGradient id="paHz" x1="9" y1="0" x2="111" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#e2a24f"/><stop offset=".35" stop-color="#ffe2a2"/><stop offset=".5" stop-color="#ffffff"/>
+      <stop offset=".65" stop-color="#ffe2a2"/><stop offset="1" stop-color="#e2a24f"/>
+    </linearGradient>
+    <linearGradient id="paCol" x1="0" y1="73" x2="0" y2="10" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#d9fff8" stop-opacity=".38"/><stop offset="1" stop-color="#d9fff8" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <circle cx="60" cy="60" r="51" fill="url(#paGlass)"/>
+  <g clip-path="url(#paClip)">
+    <rect x="55" y="8" width="10" height="66" fill="url(#paCol)" filter="url(#paSoft)"/>
+    <g fill="#e8f7ff"><circle cx="34" cy="34" r="0.5" opacity=".7"/><circle cx="84" cy="30" r="0.6" opacity=".7"/><circle cx="78" cy="46" r="0.45" opacity=".7"/><circle cx="40" cy="52" r="0.45" opacity=".7"/><circle cx="88" cy="58" r="0.4" opacity=".7"/><circle cx="30" cy="62" r="0.4" opacity=".7"/><circle cx="71" cy="20" r="0.4" opacity=".7"/></g>
+    <path d="M0 81 Q60 65 120 81 V120 H0 Z" fill="url(#paSea)"/>
+    <path d="M6 90 Q34 84 60 88 T116 86" stroke="#6f8fe8" stroke-width=".5" fill="none" opacity=".35"/>
+    <path d="M2 99 Q30 92 60 97 T120 95" stroke="#6f8fe8" stroke-width=".5" fill="none" opacity=".25"/>
+    <ellipse cx="60" cy="73.2" rx="15" ry="3.2" fill="#fff2cc" filter="url(#paSoft)" opacity=".9"/>
+    <path d="M0 81 Q60 65 120 81" stroke="#f5c873" stroke-width="2.4" fill="none" opacity=".45" filter="url(#paSoft)"/>
+    <path d="M0 81 Q60 65 120 81" stroke="url(#paHz)" stroke-width="1.15" fill="none"/>
+    <circle cx="60" cy="60" r="51" fill="url(#paRim)"/>
+      <ellipse cx="60" cy="27" rx="31" ry="13" fill="url(#paGloss)" filter="url(#paSoft)"/>
+  </g>
+  <path id="paPath" d="M60 72.5 L50.5 60.5 L66.5 49 L54.5 37.5 L60 26.5" stroke="#c9fff6" stroke-width=".6" fill="none" opacity=".75"/>
+  <g fill="#e9fffb">
+    <circle cx="60" cy="72.5" r="1.9" fill="#ffffff" filter="url(#paGlow)"/>
+    <circle cx="50.5" cy="60.5" r="1.15"/><circle cx="66.5" cy="49" r="1.15"/><circle cx="54.5" cy="37.5" r="1.15"/>
+  </g>
+  <path d="M60 18.6 L61.25 23.6 L66.2 24.9 L61.25 26.2 L60 31.2 L58.75 26.2 L53.8 24.9 L58.75 23.6 Z" fill="#ffffff" filter="url(#paGlow)"><animate attributeName="opacity" values=".85;1;.85" dur="3.6s" begin="2.1s" repeatCount="indefinite"/></path>
+  <circle r="1.5" fill="#ffffff" filter="url(#paGlow)">
+        <animateMotion dur="3.6s" repeatCount="indefinite" keyPoints="0;1;1" keyTimes="0;.62;1" calcMode="spline" keySplines=".45 0 .55 1;0 0 1 1"><mpath href="#paPath"/></animateMotion>
+        <animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;.06;.58;.64;1" dur="3.6s" repeatCount="indefinite"/></circle>
+  <circle cx="60" cy="60" r="54.5" fill="none" stroke="#e2ad5e" stroke-width="4" opacity=".22" filter="url(#paSoft)"/>
+    <circle cx="60" cy="60" r="53" fill="none" stroke="url(#paGold)" stroke-width="2.4"/>
+    <circle cx="60" cy="60" r="51.3" fill="none" stroke="#fff1cc" stroke-width=".4" opacity=".55"/>
+    <circle cx="60" cy="60" r="53" fill="none" stroke="#fff6dc" stroke-width="2.2" stroke-linecap="round"
+        pathLength="100" stroke-dasharray="5 95" filter="url(#paGlow)" opacity=".9">
+      <animate attributeName="stroke-dashoffset" values="0;-100" dur="8s" repeatCount="indefinite"/></circle>
+</svg>
+        <span class="label">PASAI</span>
       </a>
-      <div class="initiative" role="img" aria-label="Conscious Pulse">
-        <img class="icon" src="cp-icon.webp" alt="" width="360" height="365">
-        <span class="name">Conscious <b>Pulse</b></span>
+      <span class="thread" aria-hidden="true"><i></i></span>
+      <div class="initiative">
+        <svg class="orb" viewBox="0 0 120 120" aria-hidden="true"><defs>
+    <linearGradient id="cpGold" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#fbe6b2"/><stop offset=".32" stop-color="#d6a056"/>
+      <stop offset=".58" stop-color="#f7d58e"/><stop offset=".82" stop-color="#b47c36"/><stop offset="1" stop-color="#e9c27c"/>
+    </linearGradient>
+    <radialGradient id="cpGlass" cx="60" cy="34" r="74" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#1aa7ab"/><stop offset=".38" stop-color="#0b6476"/>
+      <stop offset=".72" stop-color="#04324c"/><stop offset="1" stop-color="#011a30"/>
+    </radialGradient>
+    <radialGradient id="cpRim" cx="60" cy="60" r="51" gradientUnits="userSpaceOnUse">
+      <stop offset=".72" stop-color="#000516" stop-opacity="0"/><stop offset="1" stop-color="#000516" stop-opacity=".6"/>
+    </radialGradient>
+    <linearGradient id="cpGloss" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity=".16"/><stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="cpGlow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="1.1" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="cpSoft" x="-60%" y="-60%" width="220%" height="220%"><feGaussianBlur stdDeviation="2.4"/></filter>
+    <clipPath id="cpClip"><circle cx="60" cy="60" r="51"/></clipPath>
+  </defs>
+  <circle cx="60" cy="60" r="51" fill="url(#cpGlass)"/>
+  <g clip-path="url(#cpClip)">
+    <ellipse cx="60" cy="62" rx="40" ry="22" fill="#5fe9f0" opacity=".10" filter="url(#cpSoft)"/>
+    <g fill="#a8f6ff"><circle cx="74.0" cy="51.56" r="0.39" opacity="0.05"/><circle cx="76.4" cy="48.68" r="0.39" opacity="0.05"/><circle cx="78.8" cy="46.47" r="0.39" opacity="0.06"/><circle cx="81.2" cy="45.13" r="0.39" opacity="0.07"/><circle cx="83.6" cy="44.79" r="0.39" opacity="0.08"/><circle cx="86.0" cy="45.47" r="0.39" opacity="0.09"/><circle cx="88.4" cy="47.05" r="0.39" opacity="0.10"/><circle cx="90.8" cy="49.31" r="0.39" opacity="0.11"/><circle cx="93.2" cy="51.92" r="0.39" opacity="0.11"/><circle cx="95.6" cy="54.50" r="0.39" opacity="0.12"/><circle cx="98.0" cy="56.63" r="0.39" opacity="0.13"/><circle cx="100.4" cy="57.94" r="0.39" opacity="0.14"/><circle cx="102.8" cy="58.11" r="0.39" opacity="0.15"/><circle cx="105.2" cy="56.96" r="0.39" opacity="0.16"/><circle cx="107.6" cy="54.45" r="0.39" opacity="0.16"/><circle cx="110.0" cy="50.68" r="0.39" opacity="0.17"/><circle cx="112.4" cy="45.93" r="0.39" opacity="0.18"/><circle cx="114.8" cy="40.59" r="0.39" opacity="0.19"/><circle cx="117.2" cy="35.14" r="0.39" opacity="0.20"/><circle cx="119.6" cy="30.11" r="0.39" opacity="0.21"/><circle cx="74.0" cy="52.66" r="0.43" opacity="0.08"/><circle cx="76.4" cy="50.00" r="0.43" opacity="0.10"/><circle cx="78.8" cy="48.01" r="0.43" opacity="0.12"/><circle cx="81.2" cy="46.88" r="0.43" opacity="0.13"/><circle cx="83.6" cy="46.77" r="0.43" opacity="0.15"/><circle cx="86.0" cy="47.66" r="0.43" opacity="0.16"/><circle cx="88.4" cy="49.46" r="0.43" opacity="0.18"/><circle cx="90.8" cy="51.94" r="0.43" opacity="0.19"/><circle cx="93.2" cy="54.78" r="0.43" opacity="0.21"/><circle cx="95.6" cy="57.57" r="0.43" opacity="0.22"/><circle cx="98.0" cy="59.92" r="0.43" opacity="0.24"/><circle cx="100.4" cy="61.45" r="0.43" opacity="0.25"/><circle cx="102.8" cy="61.84" r="0.43" opacity="0.27"/><circle cx="105.2" cy="60.91" r="0.43" opacity="0.29"/><circle cx="107.6" cy="58.62" r="0.43" opacity="0.30"/><circle cx="110.0" cy="55.07" r="0.43" opacity="0.32"/><circle cx="112.4" cy="50.53" r="0.43" opacity="0.33"/><circle cx="114.8" cy="45.41" r="0.43" opacity="0.35"/><circle cx="117.2" cy="40.18" r="0.43" opacity="0.36"/><circle cx="119.6" cy="35.38" r="0.43" opacity="0.38"/><circle cx="74.0" cy="53.76" r="0.47" opacity="0.12"/><circle cx="76.4" cy="51.32" r="0.47" opacity="0.15"/><circle cx="78.8" cy="49.54" r="0.47" opacity="0.17"/><circle cx="81.2" cy="48.64" r="0.47" opacity="0.19"/><circle cx="83.6" cy="48.74" r="0.47" opacity="0.21"/><circle cx="86.0" cy="49.86" r="0.47" opacity="0.24"/><circle cx="88.4" cy="51.88" r="0.47" opacity="0.26"/><circle cx="90.8" cy="54.58" r="0.47" opacity="0.28"/><circle cx="93.2" cy="57.63" r="0.47" opacity="0.30"/><circle cx="95.6" cy="60.64" r="0.47" opacity="0.33"/><circle cx="98.0" cy="63.21" r="0.47" opacity="0.35"/><circle cx="100.4" cy="64.96" r="0.47" opacity="0.37"/><circle cx="102.8" cy="65.57" r="0.47" opacity="0.39"/><circle cx="105.2" cy="64.86" r="0.47" opacity="0.42"/><circle cx="107.6" cy="62.79" r="0.47" opacity="0.44"/><circle cx="110.0" cy="59.46" r="0.47" opacity="0.46"/><circle cx="112.4" cy="55.14" r="0.47" opacity="0.48"/><circle cx="114.8" cy="50.24" r="0.47" opacity="0.51"/><circle cx="117.2" cy="45.23" r="0.47" opacity="0.53"/><circle cx="119.6" cy="40.64" r="0.47" opacity="0.55"/><circle cx="74.0" cy="54.86" r="0.51" opacity="0.16"/><circle cx="76.4" cy="52.64" r="0.51" opacity="0.19"/><circle cx="78.8" cy="51.08" r="0.51" opacity="0.22"/><circle cx="81.2" cy="50.40" r="0.51" opacity="0.25"/><circle cx="83.6" cy="50.72" r="0.51" opacity="0.28"/><circle cx="86.0" cy="52.05" r="0.51" opacity="0.31"/><circle cx="88.4" cy="54.29" r="0.51" opacity="0.34"/><circle cx="90.8" cy="57.21" r="0.51" opacity="0.37"/><circle cx="93.2" cy="60.48" r="0.51" opacity="0.40"/><circle cx="95.6" cy="63.72" r="0.51" opacity="0.43"/><circle cx="98.0" cy="66.51" r="0.51" opacity="0.46"/><circle cx="100.4" cy="68.47" r="0.51" opacity="0.49"/><circle cx="102.8" cy="69.30" r="0.51" opacity="0.52"/><circle cx="105.2" cy="68.81" r="0.51" opacity="0.55"/><circle cx="107.6" cy="66.95" r="0.51" opacity="0.57"/><circle cx="110.0" cy="63.84" r="0.51" opacity="0.60"/><circle cx="112.4" cy="59.75" r="0.51" opacity="0.63"/><circle cx="114.8" cy="55.06" r="0.51" opacity="0.66"/><circle cx="117.2" cy="50.27" r="0.51" opacity="0.69"/><circle cx="119.6" cy="45.90" r="0.51" opacity="0.72"/><circle cx="74.0" cy="55.96" r="0.55" opacity="0.20"/><circle cx="76.4" cy="53.96" r="0.55" opacity="0.24"/><circle cx="78.8" cy="52.62" r="0.55" opacity="0.27"/><circle cx="81.2" cy="52.16" r="0.55" opacity="0.31"/><circle cx="83.6" cy="52.70" r="0.55" opacity="0.35"/><circle cx="86.0" cy="54.25" r="0.55" opacity="0.38"/><circle cx="88.4" cy="56.71" r="0.55" opacity="0.42"/><circle cx="90.8" cy="59.85" r="0.55" opacity="0.46"/><circle cx="93.2" cy="63.33" r="0.55" opacity="0.49"/><circle cx="95.6" cy="66.79" r="0.55" opacity="0.53"/><circle cx="98.0" cy="69.80" r="0.55" opacity="0.57"/><circle cx="100.4" cy="71.98" r="0.55" opacity="0.60"/><circle cx="102.8" cy="73.03" r="0.55" opacity="0.64"/><circle cx="105.2" cy="72.76" r="0.55" opacity="0.67"/><circle cx="107.6" cy="71.12" r="0.55" opacity="0.71"/><circle cx="110.0" cy="68.23" r="0.55" opacity="0.75"/><circle cx="112.4" cy="64.35" r="0.55" opacity="0.78"/><circle cx="114.8" cy="59.89" r="0.55" opacity="0.82"/><circle cx="117.2" cy="55.32" r="0.55" opacity="0.86"/><circle cx="119.6" cy="51.17" r="0.55" opacity="0.89"/><circle cx="74.0" cy="57.06" r="0.51" opacity="0.16"/><circle cx="76.4" cy="55.28" r="0.51" opacity="0.19"/><circle cx="78.8" cy="54.16" r="0.51" opacity="0.22"/><circle cx="81.2" cy="53.91" r="0.51" opacity="0.25"/><circle cx="83.6" cy="54.67" r="0.51" opacity="0.28"/><circle cx="86.0" cy="56.44" r="0.51" opacity="0.31"/><circle cx="88.4" cy="59.12" r="0.51" opacity="0.34"/><circle cx="90.8" cy="62.48" r="0.51" opacity="0.37"/><circle cx="93.2" cy="66.19" r="0.51" opacity="0.40"/><circle cx="95.6" cy="69.86" r="0.51" opacity="0.43"/><circle cx="98.0" cy="73.09" r="0.51" opacity="0.46"/><circle cx="100.4" cy="75.49" r="0.51" opacity="0.49"/><circle cx="102.8" cy="76.76" r="0.51" opacity="0.52"/><circle cx="105.2" cy="76.71" r="0.51" opacity="0.55"/><circle cx="107.6" cy="75.29" r="0.51" opacity="0.57"/><circle cx="110.0" cy="72.62" r="0.51" opacity="0.60"/><circle cx="112.4" cy="68.96" r="0.51" opacity="0.63"/><circle cx="114.8" cy="64.71" r="0.51" opacity="0.66"/><circle cx="117.2" cy="60.36" r="0.51" opacity="0.69"/><circle cx="119.6" cy="56.43" r="0.51" opacity="0.72"/><circle cx="74.0" cy="58.16" r="0.47" opacity="0.12"/><circle cx="76.4" cy="56.60" r="0.47" opacity="0.15"/><circle cx="78.8" cy="55.70" r="0.47" opacity="0.17"/><circle cx="81.2" cy="55.67" r="0.47" opacity="0.19"/><circle cx="83.6" cy="56.65" r="0.47" opacity="0.21"/><circle cx="86.0" cy="58.64" r="0.47" opacity="0.24"/><circle cx="88.4" cy="61.54" r="0.47" opacity="0.26"/><circle cx="90.8" cy="65.11" r="0.47" opacity="0.28"/><circle cx="93.2" cy="69.04" r="0.47" opacity="0.30"/><circle cx="95.6" cy="72.93" r="0.47" opacity="0.33"/><circle cx="98.0" cy="76.38" r="0.47" opacity="0.35"/><circle cx="100.4" cy="79.00" r="0.47" opacity="0.37"/><circle cx="102.8" cy="80.49" r="0.47" opacity="0.39"/><circle cx="105.2" cy="80.66" r="0.47" opacity="0.42"/><circle cx="107.6" cy="79.46" r="0.47" opacity="0.44"/><circle cx="110.0" cy="77.00" r="0.47" opacity="0.46"/><circle cx="112.4" cy="73.57" r="0.47" opacity="0.48"/><circle cx="114.8" cy="69.54" r="0.47" opacity="0.51"/><circle cx="117.2" cy="65.41" r="0.47" opacity="0.53"/><circle cx="119.6" cy="61.69" r="0.47" opacity="0.55"/><circle cx="74.0" cy="59.26" r="0.43" opacity="0.08"/><circle cx="76.4" cy="57.92" r="0.43" opacity="0.10"/><circle cx="78.8" cy="57.24" r="0.43" opacity="0.12"/><circle cx="81.2" cy="57.43" r="0.43" opacity="0.13"/><circle cx="83.6" cy="58.62" r="0.43" opacity="0.15"/><circle cx="86.0" cy="60.84" r="0.43" opacity="0.16"/><circle cx="88.4" cy="63.95" r="0.43" opacity="0.18"/><circle cx="90.8" cy="67.75" r="0.43" opacity="0.19"/><circle cx="93.2" cy="71.89" r="0.43" opacity="0.21"/><circle cx="95.6" cy="76.01" r="0.43" opacity="0.22"/><circle cx="98.0" cy="79.67" r="0.43" opacity="0.24"/><circle cx="100.4" cy="82.51" r="0.43" opacity="0.25"/><circle cx="102.8" cy="84.22" r="0.43" opacity="0.27"/><circle cx="105.2" cy="84.61" r="0.43" opacity="0.29"/><circle cx="107.6" cy="83.62" r="0.43" opacity="0.30"/><circle cx="110.0" cy="81.39" r="0.43" opacity="0.32"/><circle cx="112.4" cy="78.17" r="0.43" opacity="0.33"/><circle cx="114.8" cy="74.36" r="0.43" opacity="0.35"/><circle cx="117.2" cy="70.45" r="0.43" opacity="0.36"/><circle cx="119.6" cy="66.96" r="0.43" opacity="0.38"/><circle cx="74.0" cy="60.36" r="0.39" opacity="0.05"/><circle cx="76.4" cy="59.24" r="0.39" opacity="0.05"/><circle cx="78.8" cy="58.77" r="0.39" opacity="0.06"/><circle cx="81.2" cy="59.19" r="0.39" opacity="0.07"/><circle cx="83.6" cy="60.60" r="0.39" opacity="0.08"/><circle cx="86.0" cy="63.03" r="0.39" opacity="0.09"/><circle cx="88.4" cy="66.37" r="0.39" opacity="0.10"/><circle cx="90.8" cy="70.38" r="0.39" opacity="0.11"/><circle cx="93.2" cy="74.75" r="0.39" opacity="0.11"/><circle cx="95.6" cy="79.08" r="0.39" opacity="0.12"/><circle cx="98.0" cy="82.96" r="0.39" opacity="0.13"/><circle cx="100.4" cy="86.02" r="0.39" opacity="0.14"/><circle cx="102.8" cy="87.95" r="0.39" opacity="0.15"/><circle cx="105.2" cy="88.55" r="0.39" opacity="0.16"/><circle cx="107.6" cy="87.79" r="0.39" opacity="0.16"/><circle cx="110.0" cy="85.78" r="0.39" opacity="0.17"/><circle cx="112.4" cy="82.78" r="0.39" opacity="0.18"/><circle cx="114.8" cy="79.19" r="0.39" opacity="0.19"/><circle cx="117.2" cy="75.49" r="0.39" opacity="0.20"/><circle cx="119.6" cy="72.22" r="0.39" opacity="0.21"/></g>
+    <path d="M-2 62 H30 L33.6 57 L37 62 H41.5 L47.5 31 L54.5 90 L60.5 62 L64.2 66.5 L68 62" stroke="#55e6ff" stroke-width="3.6" fill="none" stroke-linejoin="round" opacity=".45" filter="url(#cpSoft)"/>
+    <path d="M68.0 61.97 L69.0 61.00 L70.0 59.99 L71.0 58.96 L72.0 57.93 L73.0 56.92 L74.0 55.96 L75.0 55.06 L76.0 54.26 L77.0 53.55 L78.0 52.98 L79.0 52.55 L80.0 52.27 L81.0 52.16 L82.0 52.22 L83.0 52.46 L84.0 52.89 L85.0 53.48 L86.0 54.25 L87.0 55.17 L88.0 56.24 L89.0 57.44 L90.0 58.74 L91.0 60.13 L92.0 61.57 L93.0 63.04 L94.0 64.51 L95.0 65.95 L96.0 67.33 L97.0 68.62 L98.0 69.80 L99.0 70.83 L100.0 71.69 L101.0 72.36 L102.0 72.82 L103.0 73.06 L104.0 73.07 L105.0 72.83 L106.0 72.36 L107.0 71.65 L108.0 70.72 L109.0 69.57 L110.0 68.23 L111.0 66.71 L112.0 65.05 L113.0 63.27 L114.0 61.41 L115.0 59.50 L116.0 57.58 L117.0 55.69 L118.0 53.86 L119.0 52.14 L120.0 50.55 L121.0 49.14 L122.0 47.93 L123.0 46.96 L124.0 46.24 L125.0 45.80" stroke="#55e6ff" stroke-width="3.2" fill="none" opacity=".35" filter="url(#cpSoft)"/>
+    <path d="M-2 62 H30 L33.6 57 L37 62 H41.5 L47.5 31 L54.5 90 L60.5 62 L64.2 66.5 L68 62" stroke="#f2fffd" stroke-width="1.2" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+    <path d="M68.0 61.97 L69.0 61.00 L70.0 59.99 L71.0 58.96 L72.0 57.93 L73.0 56.92 L74.0 55.96 L75.0 55.06 L76.0 54.26 L77.0 53.55 L78.0 52.98 L79.0 52.55 L80.0 52.27 L81.0 52.16 L82.0 52.22 L83.0 52.46 L84.0 52.89 L85.0 53.48 L86.0 54.25 L87.0 55.17 L88.0 56.24 L89.0 57.44 L90.0 58.74 L91.0 60.13 L92.0 61.57 L93.0 63.04 L94.0 64.51 L95.0 65.95 L96.0 67.33 L97.0 68.62 L98.0 69.80 L99.0 70.83 L100.0 71.69 L101.0 72.36 L102.0 72.82 L103.0 73.06 L104.0 73.07 L105.0 72.83 L106.0 72.36 L107.0 71.65 L108.0 70.72 L109.0 69.57 L110.0 68.23 L111.0 66.71 L112.0 65.05 L113.0 63.27 L114.0 61.41 L115.0 59.50 L116.0 57.58 L117.0 55.69 L118.0 53.86 L119.0 52.14 L120.0 50.55 L121.0 49.14 L122.0 47.93 L123.0 46.96 L124.0 46.24 L125.0 45.80" stroke="#c8fbff" stroke-width="1.1" fill="none" stroke-linecap="round" opacity=".9"/>
+    <path d="M-2 62 H30 L33.6 57 L37 62 H41.5 L47.5 31 L54.5 90 L60.5 62 L64.2 66.5 L68 62" stroke="#ffffff" stroke-width="2.4" fill="none" stroke-linecap="round" stroke-linejoin="round"
+      pathLength="100" stroke-dasharray="14 120" filter="url(#cpGlow)">
+      <animate attributeName="stroke-dashoffset" values="14;-100" dur="2.4s" repeatCount="indefinite" calcMode="spline" keySplines=".4 0 .6 1"/>
+      <animate attributeName="opacity" values="0;1;1;0" keyTimes="0;.08;.82;1" dur="2.4s" repeatCount="indefinite"/></path>
+    <circle cx="60" cy="60" r="51" fill="url(#cpRim)"/>
+      <ellipse cx="60" cy="27" rx="31" ry="13" fill="url(#cpGloss)" filter="url(#cpSoft)"/>
+  </g>
+  <circle cx="60" cy="60" r="54.5" fill="none" stroke="#e2ad5e" stroke-width="4" opacity=".22" filter="url(#cpSoft)"/>
+    <circle cx="60" cy="60" r="53" fill="none" stroke="url(#cpGold)" stroke-width="2.4"/>
+    <circle cx="60" cy="60" r="51.3" fill="none" stroke="#fff1cc" stroke-width=".4" opacity=".55"/>
+    <circle cx="60" cy="60" r="53" fill="none" stroke="#fff6dc" stroke-width="2.2" stroke-linecap="round"
+        pathLength="100" stroke-dasharray="5 95" filter="url(#cpGlow)" opacity=".9">
+      <animate attributeName="stroke-dashoffset" values="0;-100" dur="8s" repeatCount="indefinite"/></circle>
+</svg>
+        <span class="label">CONSCIOUS PULSE</span>
       </div>
     </section>
 
