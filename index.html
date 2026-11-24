@@ -108,6 +108,9 @@
   .thread i { position:absolute; left:-1px; width:3px; height:40%; border-radius:2px;
               background:linear-gradient(to top, transparent, #fff, transparent); animation:ascend 2.6s cubic-bezier(.45,0,.55,1) infinite; }
   .thread:first-child i { animation-delay:1.3s; }
+  .thread i.down { background:linear-gradient(to bottom, transparent, #ffe2a0, transparent); animation-name:descend; animation-delay:1.3s; }
+  .thread:first-child i.down { animation-delay:0s; }
+  @keyframes descend { 0% { top:-40%; opacity:0; } 20% { opacity:1; } 80% { opacity:1; } 100% { top:100%; opacity:0; } }
   @keyframes ascend { 0% { top:100%; opacity:0; } 20% { opacity:1; } 80% { opacity:1; } 100% { top:-40%; opacity:0; } }
 
   blockquote { margin-top:2.4rem; opacity:0; animation:rise 1.6s ease 2.4s forwards; }
@@ -213,7 +216,7 @@
     </div>
 
     <section class="initiatives" aria-label="The New Era Movement initiatives">
-      <span class="thread" aria-hidden="true"><i></i></span>
+      <span class="thread" aria-hidden="true"><i></i><i class="down"></i></span>
       <a class="initiative" href="https://pasai.art">
         <svg class="orb" viewBox="0 0 120 120" aria-hidden="true"><defs>
     <linearGradient id="paGold" x1="0" y1="0" x2="1" y2="1">
@@ -265,7 +268,10 @@
     <circle cx="50.5" cy="60.5" r="1.15"/><circle cx="66.5" cy="49" r="1.15"/><circle cx="54.5" cy="37.5" r="1.15"/>
   </g>
   <path d="M60 18.6 L61.25 23.6 L66.2 24.9 L61.25 26.2 L60 31.2 L58.75 26.2 L53.8 24.9 L58.75 23.6 Z" fill="#ffffff" filter="url(#paGlow)"><animate attributeName="opacity" values=".85;1;.85" dur="3.6s" begin="2.1s" repeatCount="indefinite"/></path>
-  <circle r="1.5" fill="#ffffff" filter="url(#paGlow)">
+  <circle r="1.35" fill="#ffe2a0" filter="url(#paGlow)">
+        <animateMotion dur="3.6s" begin="1.8s" repeatCount="indefinite" keyPoints="1;0;0" keyTimes="0;.62;1" calcMode="spline" keySplines=".45 0 .55 1;0 0 1 1"><mpath href="#paPath"/></animateMotion>
+        <animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;.06;.58;.64;1" dur="3.6s" begin="1.8s" repeatCount="indefinite"/></circle>
+        <circle r="1.5" fill="#ffffff" filter="url(#paGlow)">
         <animateMotion dur="3.6s" repeatCount="indefinite" keyPoints="0;1;1" keyTimes="0;.62;1" calcMode="spline" keySplines=".45 0 .55 1;0 0 1 1"><mpath href="#paPath"/></animateMotion>
         <animate attributeName="opacity" values="0;1;1;0;0" keyTimes="0;.06;.58;.64;1" dur="3.6s" repeatCount="indefinite"/></circle>
   <circle cx="60" cy="60" r="54.5" fill="none" stroke="#e2ad5e" stroke-width="4" opacity=".22" filter="url(#paSoft)"/>
@@ -277,7 +283,7 @@
 </svg>
         <span class="label">PASAI</span>
       </a>
-      <span class="thread" aria-hidden="true"><i></i></span>
+      <span class="thread" aria-hidden="true"><i></i><i class="down"></i></span>
       <div class="initiative">
         <svg class="orb" viewBox="0 0 120 120" aria-hidden="true"><defs>
     <linearGradient id="cpGold" x1="0" y1="0" x2="1" y2="1">
