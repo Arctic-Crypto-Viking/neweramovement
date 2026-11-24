@@ -335,7 +335,7 @@
     </blockquote>
 
     <footer class="foot">
-      <form id="join" action="https://formsubmit.co/pederskeistrand@gmail.com" method="POST" novalidate>
+      <form id="join" action="https://formsubmit.co/contact@pasai.art" method="POST" novalidate>
         <input type="hidden" name="_subject" value="The New Era Movement: new interest">
         <input type="hidden" name="_template" value="table">
         <input type="hidden" name="_captcha" value="false">
@@ -466,7 +466,7 @@
     if (!em.value || !em.checkValidity()) { note.className = 'note err'; note.textContent = 'That email looks incomplete.'; em.focus(); return; }
     if (f.querySelector('.hp').value) return;
     f.classList.add('sent'); note.className = 'note'; note.textContent = 'Sending…';
-    fetch('https://formsubmit.co/ajax/pederskeistrand@gmail.com', {
+    fetch('https://formsubmit.co/ajax/contact@pasai.art', {
       method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
       body: JSON.stringify({ email: em.value, _subject: 'The New Era Movement: new interest', _template: 'table', source: location.href })
     }).then(function (r) { if (!r.ok) throw 0; return r.json(); })
