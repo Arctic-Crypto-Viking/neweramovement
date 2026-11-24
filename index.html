@@ -113,9 +113,36 @@
   blockquote { margin-top:2.4rem; opacity:0; animation:rise 1.6s ease 2.4s forwards; }
   blockquote p { font-family:"Cormorant Garamond",Georgia,serif; font-style:italic; font-weight:300; font-size:clamp(1.4rem,4vw,2.2rem); line-height:1.25; }
   blockquote footer { margin-top:.9rem; font-size:.72rem; letter-spacing:.32em; text-transform:uppercase; color:var(--muted); }
+  /* ---------- interest ---------- */
+  .interest { margin-top:1.6rem; opacity:0; animation:rise 1.6s ease 2.8s forwards; }
+  .growing { display:inline-flex; align-items:center; gap:.7em; font-size:.62rem; letter-spacing:.5em; padding-left:.5em; color:#8fd9d2; }
+  .growing .dot { width:5px; height:5px; border-radius:50%; background:#7fe7da; box-shadow:0 0 0 0 rgba(127,231,218,.6); animation:beat 2.4s ease-out infinite; }
+  @keyframes beat { 0% { box-shadow:0 0 0 0 rgba(127,231,218,.55); } 70% { box-shadow:0 0 0 9px rgba(127,231,218,0); } 100% { box-shadow:0 0 0 0 rgba(127,231,218,0); } }
+  #join { position:relative; display:flex; align-items:center; width:min(88vw,400px); margin:.95rem auto 0; padding:4px;
+          border-radius:999px; background:rgba(8,22,48,.55); backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
+          box-shadow:inset 0 0 0 1px rgba(227,185,116,.32), 0 10px 30px rgba(0,0,0,.35); transition:box-shadow .4s ease; }
+  #join:focus-within { box-shadow:inset 0 0 0 1px rgba(247,226,180,.7), 0 0 26px rgba(232,201,138,.16), 0 10px 30px rgba(0,0,0,.35); }
+  #join input[type=email] { flex:1; min-width:0; background:none; border:0; outline:0; color:#f4f8fc;
+          font:300 .9rem "Montserrat",system-ui,sans-serif; letter-spacing:.04em; padding:.72rem 1rem .72rem 1.15rem; }
+  #join input::placeholder { color:#7d8aa3; }
+  #join button { display:inline-flex; align-items:center; gap:.6rem; border:0; cursor:pointer; white-space:nowrap;
+          padding:.66rem 1.05rem .66rem 1.15rem; border-radius:999px; color:#1a1206;
+          font:500 .72rem "Montserrat",system-ui,sans-serif; letter-spacing:.12em; text-transform:uppercase;
+          background:linear-gradient(180deg,#f7e2b4,#dcae66); box-shadow:0 0 0 1px rgba(255,240,205,.5) inset;
+          transition:filter .3s ease, transform .3s ease; }
+  #join button:hover { filter:brightness(1.08); transform:translateX(1px); }
+  #join button svg { width:18px; height:9px; transition:transform .3s ease; }
+  #join button:hover svg { transform:translateX(3px); }
+  #join.sent { pointer-events:none; opacity:.55; }
+  .note { margin-top:.7rem; font-size:.66rem; letter-spacing:.08em; color:#7d8799; min-height:1.2em; }
+  .note.ok { color:#cfeeea; } .note.err { color:#f0b9a0; }
+  .sr, .hp { position:absolute !important; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; }
+  @media (max-width:420px) { #join button span { display:none; } #join button { padding:.66rem .9rem; } }
+
   @keyframes rise { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:none; } }
 
-  @media (max-height:860px) { .stage { width:min(30vw,138px); } .initiatives { --orb:clamp(58px,7vw,70px); } blockquote { margin-top:1.8rem; } }
+  @media (max-height:960px) { .stage { width:min(30vw,122px); } .thread { height:22px; margin:.55rem 0; } .interest { margin-top:1.2rem; } .initiatives { --orb:clamp(58px,7vw,70px); } blockquote { margin-top:1.5rem; } }
+  @media (max-height:740px) { .stage { width:96px; } .word { margin-top:1rem; } .ne { font-size:clamp(1.7rem,4.6vw,2.4rem); } .initiatives { --orb:52px; } .initiative { gap:.45rem; } .thread { height:16px; margin:.4rem 0; } blockquote { margin-top:1.1rem; } blockquote p { font-size:clamp(1.2rem,3vw,1.6rem); } .interest { margin-top:.9rem; } #join { margin-top:.6rem; } }
   @media (max-height:620px) {
     main { padding:1.2rem 1.5rem; } .stage { width:min(26vw,100px); }
     .word { margin-top:1rem; } .ne { font-size:clamp(1.6rem,4.6vw,2.4rem); }
@@ -123,7 +150,7 @@
     blockquote { margin-top:1.1rem; } blockquote p { font-size:clamp(1.2rem,3vw,1.7rem); }
   }
   @media (prefers-reduced-motion:reduce) {
-    .rays,.mark,.emblem,.shine,.edge,.word,.ne .g,.initiatives,.thread i,blockquote { animation:none !important; opacity:1; transform:none; }
+    .rays,.mark,.emblem,.shine,.edge,.word,.ne .g,.initiatives,.thread i,blockquote,.interest,.growing .dot { animation:none !important; opacity:1; transform:none; }
   }
 </style>
 </head>
@@ -301,8 +328,22 @@
 
     <blockquote>
       <p>“Preparing for The New Era.”</p>
-      <footer>— The Founder</footer>
     </blockquote>
+
+    <section class="interest" aria-label="Stay close">
+      <p class="growing"><span class="dot" aria-hidden="true"></span>GROWING SLOWLY</p>
+      <form id="join" action="https://formsubmit.co/pederskeistrand@gmail.com" method="POST" novalidate>
+        <input type="hidden" name="_subject" value="The New Era Movement: new interest">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="text" name="_honey" tabindex="-1" autocomplete="off" class="hp" aria-hidden="true">
+        <label for="em" class="sr">Your email</label>
+        <input id="em" type="email" name="email" placeholder="Your email" autocomplete="email" required>
+        <button type="submit"><span>Join the first circle</span>
+          <svg viewBox="0 0 20 10" aria-hidden="true"><path d="M0 5 H18 M14 1 L18 5 L14 9" fill="none" stroke="currentColor" stroke-width="1.2"/></svg></button>
+      </form>
+      <p class="note" id="joinNote" aria-live="polite">One letter when the door opens. Nothing else.</p>
+    </section>
   </main>
 
 <script>
@@ -414,6 +455,22 @@
       if (!still) requestAnimationFrame(tick);
     })(m0);
   }
+
+  /* ---------- interest form ---------- */
+  var f = document.getElementById('join'), note = document.getElementById('joinNote');
+  if (f) f.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var em = f.querySelector('#em');
+    if (!em.value || !em.checkValidity()) { note.className = 'note err'; note.textContent = 'That email looks incomplete.'; em.focus(); return; }
+    if (f.querySelector('.hp').value) return;
+    f.classList.add('sent'); note.className = 'note'; note.textContent = 'Sending…';
+    fetch('https://formsubmit.co/ajax/pederskeistrand@gmail.com', {
+      method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ email: em.value, _subject: 'The New Era Movement: new interest', _template: 'table', source: location.href })
+    }).then(function (r) { if (!r.ok) throw 0; return r.json(); })
+      .then(function () { note.className = 'note ok'; note.textContent = 'You are in the first circle. ✦'; em.value = ''; })
+      .catch(function () { f.classList.remove('sent'); note.className = 'note err'; note.textContent = 'Could not send just now. Please try again.'; });
+  });
 
   /* ---------- gentle tilt toward the pointer ---------- */
   var tl = document.getElementById('tilt');
