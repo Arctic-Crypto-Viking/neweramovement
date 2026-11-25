@@ -98,7 +98,7 @@
   .initiative .orb { width:var(--orb); height:var(--orb); display:block; overflow:visible;
                      filter:drop-shadow(0 10px 16px rgba(0,0,0,.55)) drop-shadow(0 0 14px rgba(110,230,220,.14));
                      transition:transform .5s cubic-bezier(.2,.7,.2,1), filter .5s ease; }
-  a.initiative:hover .orb { transform:translateY(-2px) scale(1.04);
+  .initiative:hover .orb { transform:translateY(-2px) scale(1.04);
                      filter:drop-shadow(0 12px 18px rgba(0,0,0,.55)) drop-shadow(0 0 22px rgba(232,201,138,.28)); }
   .initiative .label { font-family:"Montserrat",system-ui,sans-serif; font-weight:400; font-size:clamp(.62rem,1.3vw,.74rem);
                        letter-spacing:.5em; padding-left:.5em; color:#cfeeea; white-space:nowrap; }
@@ -218,7 +218,7 @@
 
     <section class="initiatives" aria-label="The New Era Movement initiatives">
       <span class="thread" aria-hidden="true"><i></i><i class="down"></i></span>
-      <a class="initiative" href="https://pasai.art">
+      <div class="initiative">
         <svg class="orb" viewBox="0 0 120 120" aria-hidden="true"><defs>
     <linearGradient id="paGold" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#fbe6b2"/><stop offset=".32" stop-color="#d6a056"/>
@@ -283,7 +283,7 @@
       <animate attributeName="stroke-dashoffset" values="0;-100" dur="8s" repeatCount="indefinite"/></circle>
 </svg>
         <span class="label">PASAI</span>
-      </a>
+      </div>
       <span class="thread" aria-hidden="true"><i></i><i class="down"></i></span>
       <div class="initiative">
         <svg class="orb" viewBox="0 0 120 120" aria-hidden="true"><defs>
